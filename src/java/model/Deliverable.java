@@ -98,7 +98,7 @@ public class Deliverable {
 
     public void addStudyTask(StudyTask x){studyTasks.add(x);}
     public void removeStudyTask(StudyTask x){studyTasks.add(x);}
-    
+
     public void addNote(Note x){notes.add(x);}
     public void removeNote(Note x){notes.remove(x);}
 
