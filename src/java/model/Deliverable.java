@@ -11,13 +11,13 @@ public class Deliverable {
         }
 
     }
-    private deliverableTYPE deliverableType;
+    private final deliverableTYPE deliverableType;
     private String title;
     private String description;
     private Date deadline;
     private ArrayList<StudyTask> studyTasks;
     private ArrayList<Note> notes;
-    private boolean isSummative;
+    private final boolean isSummative;
     private boolean isComplete;
 
     public Deliverable(deliverableTYPE deliverableType, String title, String description, Date deadline, boolean isSummative){
@@ -63,20 +63,22 @@ public class Deliverable {
         return isSummative;
     }
 
-    public void setDeliverableType(deliverableTYPE deliverableType) {
-        this.deliverableType = deliverableType;
-    }
-
     public void setTitle(String title) {
-        this.title = title;
+        if (this.deliverableType == deliverableTYPE.MILESTONE){
+            this.title = title;
+        }else{}
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (this.deliverableType == deliverableTYPE.MILESTONE) {
+            this.description = description;
+        }else{}
     }
 
     public void setDeadline(Date deadline) {
-        this.deadline = deadline;
+        if (this.deliverableType == deliverableTYPE.MILESTONE) {
+            this.deadline = deadline;
+        }else{}
     }
 
     public void setStudyTasks(ArrayList<StudyTask> studyTasks) {
@@ -91,13 +93,9 @@ public class Deliverable {
         isComplete = complete;
     }
 
-    public void setSummative(boolean summative) {
-        isSummative = summative;
-    }
 
-
-    public void addStudyTask(StudyTask x){studyTasks.add(x);}
-    public void removeStudyTask(StudyTask x){studyTasks.add(x);}
+    public void addStudyTask(StudyTask x){this.studyTasks.add(x);}
+    public void removeStudyTask(StudyTask x){this.studyTasks.remove(x);}
 
     public void addNote(Note x){notes.add(x);}
     public void removeNote(Note x){notes.remove(x);}
