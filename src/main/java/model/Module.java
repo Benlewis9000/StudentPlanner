@@ -1,4 +1,4 @@
-package java.model;
+package model;
 import java.util.ArrayList;
 public class Module {
     private final String moduleTitle;

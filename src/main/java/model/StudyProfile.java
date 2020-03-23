@@ -1,11 +1,11 @@
-package java.model;
+package model;
 
 import java.util.ArrayList;
 
 public class StudyProfile {
     private String month;
     private String year;
-    private ArrayList<Module> modules;
+    private ArrayList<model.Module> modules;
 
     public StudyProfile(String month, String year){
         this.month = month;
@@ -17,11 +17,11 @@ public class StudyProfile {
 
     public String getYear() { return year; }
 
-    public ArrayList<Module> getModules() { return modules; }
+    public ArrayList<model.Module> getModules() { return modules; }
 
-    public void setModules(ArrayList<Module> modules) { this.modules = modules; }
+    public void setModules(ArrayList<model.Module> modules) { this.modules = modules; }
 
-    public void addModule(Module m){ modules.add(m); }
-    public void removeModule(Module m){ modules.remove(m); }
+    public void addModule(model.Module m){ modules.add(m); }
+    public void removeModule(model.Module m){ modules.remove(m); }
 
 }
