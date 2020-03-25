@@ -21,8 +21,8 @@ public class Deliverable {
     private String title;
     private String description;
     private Date deadline;
-    private ArrayList<java.model.StudyTask> studyTasks;
-    private ArrayList<java.model.Note> notes;
+    private ArrayList<StudyTask> studyTasks;
+    private ArrayList<Note> notes;
     private final boolean isSummative;
     private boolean isComplete;
 
@@ -53,11 +53,11 @@ public class Deliverable {
         return deadline;
     }
 
-    public ArrayList<java.model.StudyTask> getStudyTasks() {
+    public ArrayList<StudyTask> getStudyTasks() {
         return studyTasks;
     }
 
-    public ArrayList<java.model.Note> getNotes() {
+    public ArrayList<Note> getNotes() {
         return notes;
     }
 
@@ -87,11 +87,11 @@ public class Deliverable {
         }else{}
     }
 
-    public void setStudyTasks(ArrayList<java.model.StudyTask> studyTasks) {
+    public void setStudyTasks(ArrayList<StudyTask> studyTasks) {
         this.studyTasks = studyTasks;
     }
 
-    public void setNotes(ArrayList<java.model.Note> notes) {
+    public void setNotes(ArrayList<Note> notes) {
         this.notes = notes;
     }
 
@@ -100,11 +100,11 @@ public class Deliverable {
     }
 
 
-    public void addStudyTask(java.model.StudyTask x){this.studyTasks.add(x);}
-    public void removeStudyTask(java.model.StudyTask x){this.studyTasks.remove(x);}
+    public void addStudyTask(StudyTask x){this.studyTasks.add(x);}
+    public void removeStudyTask(StudyTask x){this.studyTasks.remove(x);}
 
-    public void addNote(java.model.Note x){notes.add(x);}
-    public void removeNote(java.model.Note x){notes.remove(x);}
+    public void addNote(Note x){notes.add(x);}
+    public void removeNote(Note x){notes.remove(x);}
 
 
     @Override
