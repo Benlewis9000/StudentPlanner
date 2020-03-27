@@ -31,7 +31,8 @@ public class StudyTask {
 
     }
 
-    TaskType taskType;
+    public final TaskType TYPE;
+    public final int HOURS_REQUIRED;
     ArrayList<StudyTask> dependencies;
     ArrayList<Activity> activities;
     ArrayList<Note> notes;
@@ -39,13 +40,15 @@ public class StudyTask {
     /**
      * Constructor for StudyTask.
      * @param taskType the type of task.
+     * @param hoursRequired to complete the task.
      * @param dependencies StudyTasks that must be completed before this one can begin.
      * @param activities that this task consists of.
      * @param notes additional notes.
      */
-    public StudyTask(TaskType taskType, ArrayList<StudyTask> dependencies, ArrayList<Activity> activities, ArrayList<Note> notes){
+    public StudyTask(TaskType taskType, int hoursRequired, ArrayList<StudyTask> dependencies, ArrayList<Activity> activities, ArrayList<Note> notes){
 
-        this.taskType = taskType;
+        this.TYPE = taskType;
+        this.HOURS_REQUIRED = hoursRequired;
         this.dependencies = dependencies;
         this.activities = activities;
         this.notes = notes;
@@ -55,10 +58,11 @@ public class StudyTask {
     /**
      * Empty constructor (minus type).
      * @param taskType the type of task.
+     * @param hoursRequired to complete the task.
      */
-    public StudyTask(TaskType taskType){
+    public StudyTask(TaskType taskType, int hoursRequired){
 
-        this(taskType, new ArrayList<StudyTask>(), new ArrayList<Activity>(), new ArrayList<Note>());
+        this(taskType, hoursRequired, new ArrayList<StudyTask>(), new ArrayList<Activity>(), new ArrayList<Note>());
 
     }
 

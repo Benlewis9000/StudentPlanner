@@ -1,44 +1,59 @@
 package model;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Deliverable {
-    public enum deliverableTYPE{
-        EXAM("exam"), COURSEWORK("coursework"), MILESTONE("milestone");
-        private String displayName;
-        deliverableTYPE(String displayName){
-            this.displayName = displayName;
+
+    public enum DeliverableType{
+
+        EXAM("exam"),
+        COURSEWORK("coursework"),
+        MILESTONE("milestone");
+
+        private String name;
+
+        DeliverableType(String name){
+
+            this.name = name;
         }
 
         @Override
         public String toString() {
-            return "deliverableTYPE{" +
-                    "displayName='" + displayName + '\'' +
+            return "DeliverableType{" +
+                    "name='" + name + '\'' +
                     '}';
         }
+
     }
-    private final deliverableTYPE deliverableType;
+
+
+    private final DeliverableType TYPE;
     private String title;
     private String description;
-    private Date deadline;
+    private LocalDate deadline;
     private ArrayList<StudyTask> studyTasks;
     private ArrayList<Note> notes;
     private final boolean isSummative;
-    private boolean isComplete;
+    private boolean isComplete;     // Todo: how is completion set/calculated?
 
-    public Deliverable(deliverableTYPE deliverableType, String title, String description, Date deadline, boolean isSummative){
-        this.deliverableType = deliverableType;
+
+    public Deliverable(DeliverableType deliverableType, String title, String description, LocalDate deadline, boolean isSummative){
+
+        this.TYPE = deliverableType;
         this.title = title;
         this.description = description;
         this.deadline = deadline;
         this.isSummative = isSummative;
 
-        this.studyTasks = new ArrayList();
-        this.notes = new ArrayList();
+        this.studyTasks = new ArrayList<StudyTask>();
+        this.notes = new ArrayList<Note>();
+
     }
 
-    public deliverableTYPE getDeliverableType() {
-        return deliverableType;
+
+    public DeliverableType getType () {
+        return TYPE;
     }
 
     public String getTitle() {
@@ -49,7 +64,7 @@ public class Deliverable {
         return description;
     }
 
-    public Date getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
@@ -69,22 +84,23 @@ public class Deliverable {
         return isSummative;
     }
 
+    // Todo: why only allow MILESTONEs to be set?
     public void setTitle(String title) {
-        if (this.deliverableType == deliverableTYPE.MILESTONE){
+        if (this.TYPE.equals(DeliverableType.MILESTONE)) {
             this.title = title;
-        }else{}
+        }
     }
 
     public void setDescription(String description) {
-        if (this.deliverableType == deliverableTYPE.MILESTONE) {
+        if (this.TYPE.equals(DeliverableType.MILESTONE)) {
             this.description = description;
-        }else{}
+        }
     }
 
-    public void setDeadline(Date deadline) {
-        if (this.deliverableType == deliverableTYPE.MILESTONE) {
+    public void setDeadline(LocalDate deadline) {
+        if (this.TYPE.equals(DeliverableType.MILESTONE)) {
             this.deadline = deadline;
-        }else{}
+        }
     }
 
     public void setStudyTasks(ArrayList<StudyTask> studyTasks) {
@@ -100,11 +116,11 @@ public class Deliverable {
     }
 
 
-    public void addStudyTask(StudyTask x){this.studyTasks.add(x);}
-    public void removeStudyTask(StudyTask x){this.studyTasks.remove(x);}
+    public void addStudyTask(StudyTask task){this.studyTasks.add(task);}
+    public void removeStudyTask(StudyTask task){this.studyTasks.remove(task);}
 
-    public void addNote(Note x){notes.add(x);}
-    public void removeNote(Note x){notes.remove(x);}
+    public void addNote(Note note){notes.add(note);}
+    public void removeNote(Note note){notes.remove(note);}
 
 
     @Override

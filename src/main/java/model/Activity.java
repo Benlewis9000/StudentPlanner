@@ -7,6 +7,7 @@ public class Activity {
     private String description;
     private int hoursTaken;
 
+
     /**
      * Constructor for an Activity.
      * @param description what the activity consisted of.
@@ -24,6 +25,7 @@ public class Activity {
 
     }
 
+    
     /**
      * Accessor for description.
      * @return description.
@@ -39,7 +41,7 @@ public class Activity {
     @Override
     public String toString(){
 
-        // Todo - decide on format or straight CSV?
+        // Todo - decide on format or straight CSV? or use GSON to get as a line
         return null;
 
     }

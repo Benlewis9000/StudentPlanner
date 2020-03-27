@@ -1,17 +1,20 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Note {
+
     private String name;
     private String description;
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
 
-    public Note(String name, String description, Date dateCreated){
+
+    public Note(String name, String description, LocalDateTime dateCreated){
         this.name = name;
         this.description = description;
         this.dateCreated = dateCreated;
     }
+
 
     public String getName() { return name; }
 
@@ -21,7 +24,8 @@ public class Note {
 
     public void setDescription(String description) { this.description = description; }
 
-    public Date getDateCreated() { return dateCreated; }
+    public LocalDateTime getDateCreated() { return dateCreated; }
+
 
     @Override
     public String toString() {

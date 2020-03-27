@@ -1,27 +1,61 @@
 package model;
 
+import java.time.Year;
 import java.util.ArrayList;
 
 public class StudyProfile {
-    private String month;
-    private String year;
-    private ArrayList<model.Module> modules;
 
-    public StudyProfile(String month, String year){
-        this.month = month;
-        this.year = year;
-        this.modules = new ArrayList();
+
+    enum Semester {
+
+        AUTUMN("autumn"),
+        SPRING("spring");
+
+        public final String name;
+
+        Semester (String name){
+
+            this.name = name;
+
+        }
+
     }
 
-    public String getMonth() { return month; }
+    private final Semester semester;
+    private Year startYear;
+    private ArrayList<Module> modules;
 
-    public String getYear() { return year; }
 
-    public ArrayList<model.Module> getModules() { return modules; }
+    public StudyProfile(Semester semester, Year startYear, ArrayList<Module> modules){
 
-    public void setModules(ArrayList<model.Module> modules) { this.modules = modules; }
+        this.semester = semester;
+        this.startYear = startYear;
+        this.modules = modules;
 
-    public void addModule(model.Module m){ modules.add(m); }
-    public void removeModule(model.Module m){ modules.remove(m); }
+    }
+
+    public Year getStartYear() { return startYear; }
+
+    public ArrayList<Module> getModules() { return modules; }
+
+
+    public void setModules(ArrayList<Module> modules) {
+
+        this.modules = modules;
+
+    }
+
+    // Todo - controller or model?
+    public void addModule(Module m){
+
+        modules.add(m);
+
+    }
+
+    public void removeModule(Module m){
+
+        modules.remove(m);
+
+    }
 
 }
