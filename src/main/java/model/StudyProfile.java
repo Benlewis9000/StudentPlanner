@@ -6,21 +6,6 @@ import java.util.ArrayList;
 public class StudyProfile {
 
 
-    enum Semester {
-
-        AUTUMN("autumn"),
-        SPRING("spring");
-
-        public final String name;
-
-        Semester (String name){
-
-            this.name = name;
-
-        }
-
-    }
-
     private final Semester semester;
     private Year startYear;
     private ArrayList<Module> modules;
