@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class Note {
+public class Note implements JSONSerializable{
 
     private String name;
     private String description;

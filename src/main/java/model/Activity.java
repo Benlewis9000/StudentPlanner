@@ -25,7 +25,7 @@ public class Activity {
 
     }
 
-    
+
     /**
      * Accessor for description.
      * @return description.
