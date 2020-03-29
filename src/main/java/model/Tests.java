@@ -6,15 +6,13 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
+import java.util.UUID;
 
 public class Tests {
 
     public static void main(String[] args){
 
         testGson();
-        System.out.println();
-
-        testJSONSerializable();
         System.out.println();
 
     }
@@ -48,9 +46,11 @@ public class Tests {
 
     }
 
+
     /**
      * Test the JSONSerializable interface and default method.
      */
+    /* Todo: remove
     public static void testJSONSerializable(){
 
         Note note = new Note("Test JSONSerializable", "This is a test for JSONSerializable.", LocalDateTime.now());
@@ -60,5 +60,6 @@ public class Tests {
         System.out.println(noteJson);
 
     }
+    */
 
 }

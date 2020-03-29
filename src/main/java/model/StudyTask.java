@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class StudyTask {
 
@@ -33,9 +34,9 @@ public class StudyTask {
 
     public final TaskType TYPE;
     public final int HOURS_REQUIRED;
-    ArrayList<StudyTask> dependencies;
-    ArrayList<Activity> activities;
-    ArrayList<Note> notes;
+    HashSet<StudyTask> dependencies;
+    HashSet<Activity> activities;
+    HashSet<Note> notes;
 
     /**
      * Constructor for StudyTask.
@@ -45,7 +46,7 @@ public class StudyTask {
      * @param activities that this task consists of.
      * @param notes additional notes.
      */
-    public StudyTask(TaskType taskType, int hoursRequired, ArrayList<StudyTask> dependencies, ArrayList<Activity> activities, ArrayList<Note> notes){
+    public StudyTask(TaskType taskType, int hoursRequired, HashSet<StudyTask> dependencies, HashSet<Activity> activities, HashSet<Note> notes){
 
         this.TYPE = taskType;
         this.HOURS_REQUIRED = hoursRequired;
@@ -62,7 +63,7 @@ public class StudyTask {
      */
     public StudyTask(TaskType taskType, int hoursRequired){
 
-        this(taskType, hoursRequired, new ArrayList<StudyTask>(), new ArrayList<Activity>(), new ArrayList<Note>());
+        this(taskType, hoursRequired, new HashSet<StudyTask>(), new HashSet<Activity>(), new HashSet<Note>());
 
     }
 

@@ -2,6 +2,8 @@ package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class Deliverable {
 
@@ -18,13 +20,6 @@ public class Deliverable {
             this.name = name;
         }
 
-        @Override
-        public String toString() {
-            return "DeliverableType{" +
-                    "name='" + name + '\'' +
-                    '}';
-        }
-
     }
 
 
@@ -32,10 +27,10 @@ public class Deliverable {
     private String title;
     private String description;
     private LocalDate deadline;
-    private ArrayList<StudyTask> studyTasks;
-    private ArrayList<Note> notes;
+    private transient HashSet<StudyTask> studyTasks;
+    private transient HashSet<Note> notes;
     private final boolean isSummative;
-    private boolean isComplete;     // Todo: how is completion set/calculated?
+    private transient boolean isComplete;     // Todo: how is completion set/calculated?
 
 
     public Deliverable(DeliverableType deliverableType, String title, String description, LocalDate deadline, boolean isSummative){
@@ -46,8 +41,8 @@ public class Deliverable {
         this.deadline = deadline;
         this.isSummative = isSummative;
 
-        this.studyTasks = new ArrayList<StudyTask>();
-        this.notes = new ArrayList<Note>();
+        this.studyTasks = new HashSet<StudyTask>();
+        this.notes = new HashSet<Note>();
 
     }
 
@@ -68,11 +63,11 @@ public class Deliverable {
         return deadline;
     }
 
-    public ArrayList<StudyTask> getStudyTasks() {
+    public HashSet<StudyTask> getStudyTasks() {
         return studyTasks;
     }
 
-    public ArrayList<Note> getNotes() {
+    public HashSet<Note> getNotes() {
         return notes;
     }
 
@@ -103,11 +98,11 @@ public class Deliverable {
         }
     }
 
-    public void setStudyTasks(ArrayList<StudyTask> studyTasks) {
+    public void setStudyTasks(HashSet<StudyTask> studyTasks) {
         this.studyTasks = studyTasks;
     }
 
-    public void setNotes(ArrayList<Note> notes) {
+    public void setNotes(HashSet<Note> notes) {
         this.notes = notes;
     }
 
@@ -123,16 +118,14 @@ public class Deliverable {
     public void removeNote(Note note){notes.remove(note);}
 
 
-    @Override
-    public String toString() {
-        return "Deliverable{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", deadline=" + deadline +
-                ", studyTasks=" + studyTasks +
-                ", notes=" + notes +
-                ", isSummative=" + isSummative +
-                ", isComplete=" + isComplete +
-                '}';
+    /**
+     * Generate a dummy instance for testing with set values.
+     * @return instance of Deliverable.
+     */
+    public static Deliverable generateDummy(){
+
+        return new Deliverable(DeliverableType.EXAM, "Final Exam", "50% exam for module. 09:00 in C. HALL.", LocalDate.of(2020, 6, 12), true);
+
     }
+
 }

@@ -1,13 +1,14 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Module {
 
     private final String moduleTitle;
     private final String moduleOrganiser;
     private final String moduleCode;
-    private ArrayList<Deliverable> deliverables;
+    private HashSet<Deliverable> deliverables;
 
 
     public Module(String moduleTitle, String moduleOrganiser, String moduleCode){
@@ -15,7 +16,7 @@ public class Module {
         this.moduleTitle = moduleTitle;
         this.moduleOrganiser = moduleOrganiser;
         this.moduleCode = moduleCode;
-        this.deliverables = new ArrayList<>();
+        this.deliverables = new HashSet<>();
 
     }
 
@@ -36,7 +37,7 @@ public class Module {
         return moduleCode;
     }
 
-    public ArrayList<Deliverable> getDeliverables() {
+    public HashSet<Deliverable> getDeliverables() {
         return deliverables;
     }
 
