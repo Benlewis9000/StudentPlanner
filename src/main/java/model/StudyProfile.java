@@ -5,45 +5,51 @@ import com.google.gson.GsonBuilder;
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class StudyProfile {
 
 
+    private final UUID ID;
     private final Semester semester;
-    private Year startYear;
-    private HashSet<Module> modules;  // todo: hashset?
+    private final Year startYear;
+    private HashSet<UUID> moduleIDs;
+    private HashSet<UUID> activityIDs;
 
+    /**
+     * Constructor for a new StudyProfile, generating a random UUID.
+     * @param semester semester of study.
+     * @param startYear starting year (of year, not semester).
+     */
+    public StudyProfile(Semester semester, Year startYear){
 
-    public StudyProfile(Semester semester, Year startYear, HashSet<Module> modules){
-
+        this.ID = UUID.randomUUID();
         this.semester = semester;
         this.startYear = startYear;
-        this.modules = modules;
+        this.moduleIDs = new HashSet<>();
+        this.activityIDs = new HashSet<>();
+
+        saveToDatabase();
 
     }
+
+    /**
+     * Get the UUID for the instance.
+     * @return unique ID as UUID.
+     */
+    public UUID getID () { return ID; }
 
     public Year getStartYear() { return startYear; }
 
-    public HashSet<Module> getModules() { return modules; }
 
+    /**
+     * Save state of object to database, adding or overwriting corresponding UUID if present.
+     */
+    public void saveToDatabase(){
 
-    public void setModules(HashSet<Module> modules) {
-
-        this.modules = modules;
-
-    }
-
-    // Todo - controller or model? - PROBABLY MODEL
-    public void addModule(Module m){
-
-        modules.add(m);
-
-    }
-
-    public void removeModule(Module m){
-
-        modules.remove(m);
+        Database.getDatabase().addStudyProfile(this);
 
     }
 
@@ -66,11 +72,12 @@ public class StudyProfile {
 
         softEng.addDeliverable(Deliverable.generateDummy());
 
-        HashSet<Module> modules = new HashSet<>();
-        modules.add(softEng);
-        modules.add(networks);
+        HashMap<UUID, Module> modules = new HashMap<>();
+        modules.put(softEng.getID(), softEng);
+        modules.put(networks.getID(), networks);
 
-        return new StudyProfile(Semester.SPRING, Year.of(2020), modules);
+        return new StudyProfile(Semester.SPRING, Year.of(2020)); // todo: update to new format (sets & database)
+        // Todo: studyProfile.addModule(module) - need to implement add etc. first
 
     }
 

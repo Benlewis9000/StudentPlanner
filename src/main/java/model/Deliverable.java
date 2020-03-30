@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class Deliverable {
 
@@ -23,6 +24,7 @@ public class Deliverable {
     }
 
 
+    private final UUID ID;
     private final DeliverableType TYPE;
     private String title;
     private String description;
@@ -35,6 +37,7 @@ public class Deliverable {
 
     public Deliverable(DeliverableType deliverableType, String title, String description, LocalDate deadline, boolean isSummative){
 
+        ID = UUID.randomUUID();
         this.TYPE = deliverableType;
         this.title = title;
         this.description = description;
@@ -44,8 +47,18 @@ public class Deliverable {
         this.studyTasks = new HashSet<StudyTask>();
         this.notes = new HashSet<Note>();
 
+        saveToDatabase();
+
     }
 
+
+    /**
+     * Get the UUID for the instance.
+     * @return unique ID as UUID.
+     */
+    public UUID getID() {
+        return ID;
+    }
 
     public DeliverableType getType () {
         return TYPE;
@@ -79,43 +92,22 @@ public class Deliverable {
         return isSummative;
     }
 
-    // Todo: why only allow MILESTONEs to be set?
-    public void setTitle(String title) {
-        if (this.TYPE.equals(DeliverableType.MILESTONE)) {
-            this.title = title;
-        }
-    }
 
-    public void setDescription(String description) {
-        if (this.TYPE.equals(DeliverableType.MILESTONE)) {
-            this.description = description;
-        }
-    }
-
-    public void setDeadline(LocalDate deadline) {
-        if (this.TYPE.equals(DeliverableType.MILESTONE)) {
-            this.deadline = deadline;
-        }
-    }
-
-    public void setStudyTasks(HashSet<StudyTask> studyTasks) {
-        this.studyTasks = studyTasks;
-    }
-
-    public void setNotes(HashSet<Note> notes) {
-        this.notes = notes;
-    }
-
-    public void setComplete(boolean complete) {
-        isComplete = complete;
-    }
-
-
+    // todo: will need to use database? YES
     public void addStudyTask(StudyTask task){this.studyTasks.add(task);}
     public void removeStudyTask(StudyTask task){this.studyTasks.remove(task);}
 
     public void addNote(Note note){notes.add(note);}
     public void removeNote(Note note){notes.remove(note);}
+
+    /**
+     * Save state of object to database, adding or overwriting corresponding UUID if present.
+     */
+    public void saveToDatabase(){
+
+        Database.getDatabase().addDeliverable(this);
+
+    }
 
 
     /**

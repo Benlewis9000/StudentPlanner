@@ -2,8 +2,11 @@ package model;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
+import java.util.UUID;
+
 public class Activity {
 
+    private final UUID ID;
     private String description;
     private int hoursTaken;
 
@@ -12,19 +15,30 @@ public class Activity {
      * Constructor for an Activity.
      * @param description what the activity consisted of.
      * @param hoursTaken to complete the activity.
-     * @throws InvalidArgumentException if description contains commas, or hoursTaken is negative.
+     * @throws InvalidArgumentException if hoursTaken is negative.
      */
     public Activity(String description, int hoursTaken) throws InvalidArgumentException{
 
-        if (hoursTaken < 0) throw new IllegalArgumentException("Cannot set negative hours for an Activity.");
+        // Generate random UUID
+        ID = UUID.randomUUID();
 
-        if (description.contains(",")) throw new IllegalArgumentException("Text may not include commas.");
+        // Make sure hours set is positive and not 0
+        if (hoursTaken < 0) throw new IllegalArgumentException("Cannot set negative hours for an Activity.");
 
         this.description = description;
         this.hoursTaken = hoursTaken;
 
+        saveToDatabase();
+
     }
 
+    /**
+     * Get the UUID for the instance.
+     * @return unique ID as UUID.
+     */
+    public UUID getID() {
+        return this.ID;
+    }
 
     /**
      * Accessor for description.
@@ -38,11 +52,12 @@ public class Activity {
      */
     public int getHoursTaken() { return this.getHoursTaken(); }
 
-    @Override
-    public String toString(){
+    /**
+     * Save state of object to database, adding or overwriting corresponding UUID if present.
+     */
+    public void saveToDatabase(){
 
-        // Todo - decide on format or straight CSV? or use GSON to get as a line
-        return null;
+        Database.getDatabase().addActivity(this);
 
     }
 
