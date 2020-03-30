@@ -12,8 +12,15 @@ public class Database {
 
 
     // Singleton pattern reference
-    public static final Database DATABASE = new Database();
+    private static final Database DATABASE = new Database();
 
+    /**
+     * Accessor to single Database instance.
+     * @return the database instance.
+     */
+    public static Database getDatabase() {
+        return DATABASE;
+    }
 
     // Data being stored
     private HashMap<UUID, StudyProfile> studyProfiles;
@@ -64,9 +71,7 @@ public class Database {
         try {
 
             Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("database.json"), "utf-8"));
-
             writer.write(databaseJson);
-
             writer.close();
 
 
@@ -137,7 +142,7 @@ public class Database {
 
     }
 
-    public Deliverable getDeliverableFromUUID(UUID uuid){
+    public Deliverable getDeliverableFromUUID(UUID uuid) throws IllegalArgumentException{
 
         if (containsDeliverable(uuid)){
 
@@ -160,7 +165,7 @@ public class Database {
 
     }
 
-    public StudyTask getStudyTaskFromUUID(UUID uuid){
+    public StudyTask getStudyTaskFromUUID(UUID uuid) throws IllegalArgumentException{
 
         if (containsStudyTask(uuid)){
 
@@ -183,7 +188,7 @@ public class Database {
 
     }
 
-    public Activity getActivityFromUUID(UUID uuid){
+    public Activity getActivityFromUUID(UUID uuid) throws IllegalArgumentException{
 
         if (containsActivity(uuid)){
 
@@ -206,7 +211,7 @@ public class Database {
 
     }
 
-    public Note getNoteFromUUID(UUID uuid){
+    public Note getNoteFromUUID(UUID uuid) throws IllegalArgumentException{
 
         if (containsNote(uuid)){
 
