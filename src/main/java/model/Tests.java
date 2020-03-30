@@ -3,17 +3,15 @@ package model;
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Locale;
-import java.util.UUID;
+import java.time.Year;
 
 public class Tests {
 
     public static void main(String[] args){
 
-        testGson();
-        System.out.println();
+        testModel();
 
     }
 
@@ -46,20 +44,35 @@ public class Tests {
 
     }
 
+    public static void testModel(){
 
-    /**
-     * Test the JSONSerializable interface and default method.
-     */
-    /* Todo: remove
-    public static void testJSONSerializable(){
+        StudyProfile studyProfile = new StudyProfile(Semester.SPRING, Year.of(2020));
 
-        Note note = new Note("Test JSONSerializable", "This is a test for JSONSerializable.", LocalDateTime.now());
+        Module softEng = new Module("SOFTWARE ENGINEERING 1", "Rudy Lapeer", "CMP-5012B");
+        Module networks = new Module("NETWORKS", "Ben Milner", "CMP-5037B");
+        studyProfile.addModule(softEng);
+        studyProfile.addModule(networks);
 
-        String noteJson = note.toJSON();
+        Deliverable exam = new Deliverable(DeliverableType.EXAM, "Final Exam", "2 hours, room C. HALL.",
+                LocalDate.of(2020, 6, 12), true);
+        Deliverable milestone = new Deliverable(DeliverableType.MILESTONE, "Finish Revision", "Finish revising to start past papers",
+                LocalDate.of(2020, 6, 6), false);
+        softEng.addDeliverable(exam);
+        softEng.addDeliverable(milestone);
 
-        System.out.println(noteJson);
+        StudyTask studyTask1 = new StudyTask(TaskType.REVISION, 4);
+        milestone.addStudyTask(studyTask1);
+
+        Activity activity1 = new Activity("Revised OSI 7 layers", 3);
+        Activity activity2 = new Activity("Revised subnet masking", 2);
+        studyTask1.addActivity(activity1);
+        studyTask1.addActivity(activity2);
+
+        StudyTask studyTask2 = new StudyTask(TaskType.PROGRAMMING, 5);
+        milestone.addStudyTask(studyTask2);
+
+        Database.getDatabase().saveDatabaseToFile();
 
     }
-    */
 
 }
