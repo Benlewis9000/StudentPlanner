@@ -112,6 +112,13 @@ public class Database {
 
     }
 
+    public void deleteStudyProfile(UUID uuid){
+
+        studyProfiles.remove(uuid);
+
+    }
+
+
     public void addModule(Module module){
 
         modules.put(module.getID(), module);
@@ -134,6 +141,13 @@ public class Database {
         else throw new IllegalArgumentException("Module " + uuid.toString() + " could not be found.");
 
     }
+
+    public void deleteModule(UUID uuid){
+
+        modules.remove(uuid);
+
+    }
+
 
     public void addDeliverable(Deliverable deliverable){
 
@@ -158,6 +172,13 @@ public class Database {
 
     }
 
+    public void deleteDeliverable(UUID uuid){
+
+        deliverables.remove(uuid);
+
+    }
+
+
     public void addStudyTask(StudyTask studyTask){
 
         studyTasks.put(studyTask.getID(), studyTask);
@@ -180,6 +201,13 @@ public class Database {
         else throw new IllegalArgumentException("StudyTask " + uuid.toString() + " could not be found.");
 
     }
+
+    public void deleteStudyTask(UUID uuid){
+
+        studyTasks.remove(uuid);
+
+    }
+
 
     public void addActivity(Activity activity){
 
@@ -204,6 +232,13 @@ public class Database {
 
     }
 
+    public void deleteActivity(UUID uuid){
+
+        activities.remove(uuid);
+
+    }
+
+
     public void addNote(Note note){
 
         notes.put(note.getID(), note);
@@ -224,6 +259,12 @@ public class Database {
 
         }
         else throw new IllegalArgumentException("Note " + uuid.toString() + " could not be found.");
+
+    }
+
+    public void deleteNote(UUID uuid){
+
+        notes.remove(uuid);
 
     }
 
