@@ -63,13 +63,18 @@ public class Database {
 
     }
 
+    /**
+     * Serialize and write out the current database state to "database.json".
+     */
     public void saveDatabaseToFile(){
 
+        // Create Gson object and serialize database to a String.
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String databaseJson = gson.toJson(this);
 
         try {
 
+            // Write json string out to file
             Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("database.json"), "utf-8"));
             writer.write(databaseJson);
             writer.close();
