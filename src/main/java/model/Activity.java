@@ -15,15 +15,14 @@ public class Activity {
      * Constructor for an Activity.
      * @param description what the activity consisted of.
      * @param hoursTaken to complete the activity.
-     * @throws InvalidArgumentException if hoursTaken is negative.
      */
-    public Activity(String description, int hoursTaken) throws InvalidArgumentException{
+    public Activity(String description, int hoursTaken) {
 
         // Generate random UUID
         ID = UUID.randomUUID();
 
         // Make sure hours set is positive and not 0
-        if (hoursTaken < 0) throw new IllegalArgumentException("Cannot set negative hours for an Activity.");
+        if (hoursTaken < 0) hoursTaken = 1;
 
         this.description = description;
         this.hoursTaken = hoursTaken;
