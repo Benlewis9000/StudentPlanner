@@ -8,21 +8,6 @@ import java.util.UUID;
 
 public class Deliverable {
 
-    public enum DeliverableType{
-
-        EXAM("exam"),
-        COURSEWORK("coursework"),
-        MILESTONE("milestone");
-
-        private String name;
-
-        DeliverableType(String name){
-
-            this.name = name;
-        }
-
-    }
-
 
     private final UUID ID;
     private final DeliverableType TYPE;

@@ -1,40 +1,9 @@
 package model;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import com.sun.org.apache.bcel.internal.generic.DDIV;
-
-import javax.xml.crypto.Data;
 import java.util.HashSet;
 import java.util.UUID;
 
 public class StudyTask {
-
-    /**
-     * Enum to state what type of task a StudyTask is.
-     */
-    enum TaskType {
-
-        REVISION("Revising"),
-        PROGRAMMING("Programming"),
-        WRITING("Writing"),
-        RESEARCH("Research");
-
-        String name;
-
-        TaskType(String name){
-
-            name = name;
-
-        }
-
-        @Override
-        public String toString(){
-
-            return this.name;
-
-        }
-
-    }
 
     private final UUID ID;
     private final TaskType TYPE;
@@ -43,6 +12,7 @@ public class StudyTask {
     private HashSet<UUID> activityIDs;
     private HashSet<UUID> noteIDs;
 
+    // Todo: is this needed?
     /**
      * Constructor for StudyTask.
      * @param taskType the type of task.
