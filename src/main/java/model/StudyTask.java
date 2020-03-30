@@ -1,6 +1,7 @@
 package model;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
+import com.sun.org.apache.bcel.internal.generic.DDIV;
 
 import javax.xml.crypto.Data;
 import java.util.HashSet;
@@ -59,6 +60,8 @@ public class StudyTask {
         this.activityIDs = activityIDs;
         this.noteIDs = noteIDs;
 
+        saveToDatabase();
+
     }
 
     /**
@@ -83,6 +86,16 @@ public class StudyTask {
 
     public int getHoursRequired(){
         return HOURS_REQUIRED;
+    }
+
+
+    /**
+     * Save state of object to database, adding or overwriting corresponding UUID if present.
+     */
+    public void saveToDatabase(){
+
+        Database.getDatabase().addStudyTask(this);
+
     }
 
 
@@ -147,6 +160,7 @@ public class StudyTask {
 
     }
 
+
     /**
      * Query whether the study task has the activity corresponding to the given UUID.
      * @param uuid UUID of the Activity in question.
@@ -193,6 +207,55 @@ public class StudyTask {
     public void removeActivity(Activity activity){
 
         activityIDs.remove(activity.getID());
+
+    }
+
+
+    /**
+     * Query whether the study task has the Note corresponding to the given UUID.
+     * @param uuid UUID of the Note in question.
+     * @return true if the UUID corresponds to a Note owned by this StudyTask.
+     */
+    public boolean hasNote(UUID uuid){
+
+        return noteIDs.contains(uuid);
+
+    }
+
+    /**
+     * Get the Note instance of an note held by the StudyTask.
+     * @param uuid of the Note held.
+     * @return the instance of the Note.
+     * @throws IllegalArgumentException if the Note was not held, or could not be found in the database.
+     */
+    public Note getNoteFromUUID(UUID uuid) throws IllegalArgumentException{
+
+        if (hasNote(uuid)){
+
+            return Database.getDatabase().getNoteFromUUID(uuid);
+
+        }
+        else throw new IllegalArgumentException("Note " + uuid + " is not a member of StudyTask + " + this.getID() + ".");
+
+    }
+
+    /**
+     * Add a Note to the StudyTask.
+     * @param note to add.
+     */
+    public void addNote(Note note){
+
+        noteIDs.add(note.getID());
+
+    }
+
+    /**
+     * Remove a Note from the StudyTask.
+     * @param note to remove.
+     */
+    public void removeNote(Note note){
+
+        noteIDs.remove(note.getID());
 
     }
 
