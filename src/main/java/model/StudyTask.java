@@ -250,12 +250,13 @@ public class StudyTask {
     }
 
     /**
-     * Remove a Note from the StudyTask.
+     * Remove a Note from the StudyTask (and delete from database).
      * @param note to remove.
      */
     public void removeNote(Note note){
 
         noteIDs.remove(note.getID());
+        Database.getDatabase().deleteNote(note.getID());
 
     }
 

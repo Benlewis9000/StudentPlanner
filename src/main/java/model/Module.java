@@ -10,7 +10,7 @@ public class Module {
     private final String moduleTitle;
     private final String moduleOrganiser;
     private final String moduleCode;
-    private HashSet<Deliverable> deliverables;
+    private HashSet<UUID> deliverableIDs;
 
 
     public Module(String moduleTitle, String moduleOrganiser, String moduleCode){
@@ -19,7 +19,8 @@ public class Module {
         this.moduleTitle = moduleTitle;
         this.moduleOrganiser = moduleOrganiser;
         this.moduleCode = moduleCode;
-        this.deliverables = new HashSet<>();
+
+        this.deliverableIDs = new HashSet<>();
 
         saveToDatabase();
 
@@ -35,10 +36,6 @@ public class Module {
 
     }
 
-    public void addDeliverable(Deliverable x){this.deliverables.add(x);}
-
-    public void removeStudyTask(Deliverable x){this.deliverables.remove(x);}
-
     public String getModuleTitle() {
         return moduleTitle;
     }
@@ -51,8 +48,54 @@ public class Module {
         return moduleCode;
     }
 
-    public HashSet<Deliverable> getDeliverables() {
-        return deliverables;
+
+    /**
+     * Query whether the Module has the Deliverable corresponding to the given UUID.
+     * @param uuid UUID of the Deliverable in question.
+     * @return true if the UUID corresponds to a Deliverable owned by this Module.
+     */
+    public boolean hasDeliverable(UUID uuid){
+
+        return deliverableIDs.contains(uuid);
+
+    }
+
+    /**
+     * Get the Deliverable instance of a study task held by the Module.
+     * @param uuid of the Deliverable held.
+     * @return the instance of the Deliverable.
+     * @throws IllegalArgumentException if the Deliverable was not held, or could not be found in the database.
+     */
+    public Deliverable getDeliverableFromUUID(UUID uuid) throws IllegalArgumentException{
+
+        if (hasDeliverable(uuid)){
+
+            return Database.getDatabase().getDeliverableFromUUID(uuid);
+
+        }
+        else throw new IllegalArgumentException("Deliverable " + uuid + " is not a member of Module + " + this.getID() + ".");
+
+    }
+
+    /**
+     * Add a Deliverable to the Module.
+     * @param deliverable to add.
+     */
+    public void addDeliverable(Deliverable deliverable){
+
+        deliverableIDs.add(deliverable.getID());
+
+    }
+
+    /**
+     * Remove a Deliverable from the Module (thus delete from database).
+     * @param deliverable to remove.
+     */
+    public void removeDeliverable(Deliverable deliverable){
+
+        deliverableIDs.remove(deliverable.getID());
+        Database.getDatabase().deleteDeliverable(deliverable.getID());
+
     }
 
     /**

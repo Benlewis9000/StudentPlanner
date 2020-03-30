@@ -16,7 +16,6 @@ public class StudyProfile {
     private final Semester semester;
     private final Year startYear;
     private HashSet<UUID> moduleIDs;
-    private HashSet<UUID> activityIDs;
 
     /**
      * Constructor for a new StudyProfile, generating a random UUID.
@@ -29,7 +28,6 @@ public class StudyProfile {
         this.semester = semester;
         this.startYear = startYear;
         this.moduleIDs = new HashSet<>();
-        this.activityIDs = new HashSet<>();
 
         saveToDatabase();
 
@@ -43,6 +41,58 @@ public class StudyProfile {
 
     public Year getStartYear() { return startYear; }
 
+    ////////////////////////////
+
+    /**
+     * Query whether the StudyProfile has the Module corresponding to the given UUID.
+     * @param uuid UUID of the Module in question.
+     * @return true if the UUID corresponds to a Module owned by this StudyProfile.
+     */
+    public boolean hasModule(UUID uuid){
+
+        return moduleIDs.contains(uuid);
+
+    }
+
+    /**
+     * Get the Module instance of a study task held by the StudyProfile.
+     * @param uuid of the Module held.
+     * @return the instance of the Module.
+     * @throws IllegalArgumentException if the Module was not held, or could not be found in the database.
+     */
+    public Module getModuleFromUUID(UUID uuid) throws IllegalArgumentException{
+
+        if (hasModule(uuid)){
+
+            return Database.getDatabase().getModuleFromUUID(uuid);
+
+        }
+        else throw new IllegalArgumentException("Module " + uuid + " is not a member of StudyProfile + " + this.getID() + ".");
+
+    }
+
+    /**
+     * Add a Module to the StudyProfile.
+     * @param module to add.
+     */
+    public void addModule(Module module){
+
+        moduleIDs.add(module.getID());
+
+    }
+
+    /**
+     * Remove a Module from the StudyProfile (thus delete from database).
+     * @param module to remove.
+     */
+    public void removeModule(Module module){
+
+        moduleIDs.remove(module.getID());
+        Database.getDatabase().deleteModule(module.getID());
+
+    }
+
+    ////////////////////////////
 
     /**
      * Save state of object to database, adding or overwriting corresponding UUID if present.

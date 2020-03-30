@@ -29,8 +29,8 @@ public class Deliverable {
     private String title;
     private String description;
     private LocalDate deadline;
-    private transient HashSet<StudyTask> studyTasks;
-    private transient HashSet<Note> notes;
+    private transient HashSet<UUID> studyTaskIDs;
+    private transient HashSet<UUID> noteIDs;
     private final boolean isSummative;
     private transient boolean isComplete;     // Todo: how is completion set/calculated?
 
@@ -44,8 +44,8 @@ public class Deliverable {
         this.deadline = deadline;
         this.isSummative = isSummative;
 
-        this.studyTasks = new HashSet<StudyTask>();
-        this.notes = new HashSet<Note>();
+        this.studyTaskIDs = new HashSet<UUID>();
+        this.noteIDs = new HashSet<UUID>();
 
         saveToDatabase();
 
@@ -76,14 +76,6 @@ public class Deliverable {
         return deadline;
     }
 
-    public HashSet<StudyTask> getStudyTasks() {
-        return studyTasks;
-    }
-
-    public HashSet<Note> getNotes() {
-        return notes;
-    }
-
     public boolean isComplete() {
         return isComplete;
     }
@@ -93,19 +85,112 @@ public class Deliverable {
     }
 
 
-    // todo: will need to use database? YES
-    public void addStudyTask(StudyTask task){this.studyTasks.add(task);}
-    public void removeStudyTask(StudyTask task){this.studyTasks.remove(task);}
-
-    public void addNote(Note note){notes.add(note);}
-    public void removeNote(Note note){notes.remove(note);}
-
     /**
      * Save state of object to database, adding or overwriting corresponding UUID if present.
      */
     public void saveToDatabase(){
 
         Database.getDatabase().addDeliverable(this);
+
+    }
+
+
+    /**
+     * Query whether the Deliverable has the StudyTask corresponding to the given UUID.
+     * @param uuid UUID of the StudyTask in question.
+     * @return true if the UUID corresponds to a StudyTask owned by this Deliverable.
+     */
+    public boolean hasStudyTask(UUID uuid){
+
+        return studyTaskIDs.contains(uuid);
+
+    }
+
+    /**
+     * Get the StudyTask instance of a study task held by the Deliverable.
+     * @param uuid of the StudyTask held.
+     * @return the instance of the StudyTask.
+     * @throws IllegalArgumentException if the StudyTask was not held, or could not be found in the database.
+     */
+    public StudyTask getStudyTaskFromUUID(UUID uuid) throws IllegalArgumentException{
+
+        if (hasStudyTask(uuid)){
+
+            return Database.getDatabase().getStudyTaskFromUUID(uuid);
+
+        }
+        else throw new IllegalArgumentException("StudyTask " + uuid + " is not a member of Deliverable + " + this.getID() + ".");
+
+    }
+
+    /**
+     * Add a StudyTask to the Deliverable.
+     * @param studyTask to add.
+     */
+    public void addStudyTask(StudyTask studyTask){
+
+        studyTaskIDs.add(studyTask.getID());
+
+    }
+
+    /**
+     * Remove a StudyTask from the Deliverable (thus delete from database).
+     * @param studyTask to remove.
+     */
+    public void removeStudyTask(StudyTask studyTask){
+
+        studyTaskIDs.remove(studyTask.getID());
+        Database.getDatabase().deleteStudyTask(studyTask.getID());
+
+    }
+
+
+    /**
+     * Query whether the Deliverable has the Note corresponding to the given UUID.
+     * @param uuid UUID of the Note in question.
+     * @return true if the UUID corresponds to a Note owned by this Deliverable.
+     */
+    public boolean hasNote(UUID uuid){
+
+        return noteIDs.contains(uuid);
+
+    }
+
+    /**
+     * Get the Note instance of an note held by the Deliverable.
+     * @param uuid of the Note held.
+     * @return the instance of the Note.
+     * @throws IllegalArgumentException if the Note was not held, or could not be found in the database.
+     */
+    public Note getNoteFromUUID(UUID uuid) throws IllegalArgumentException{
+
+        if (hasNote(uuid)){
+
+            return Database.getDatabase().getNoteFromUUID(uuid);
+
+        }
+        else throw new IllegalArgumentException("Note " + uuid + " is not a member of Deliverable + " + this.getID() + ".");
+
+    }
+
+    /**
+     * Add a Note to the Deliverable.
+     * @param note to add.
+     */
+    public void addNote(Note note){
+
+        noteIDs.add(note.getID());
+
+    }
+
+    /**
+     * Remove a Note from the Deliverable (and delete from database).
+     * @param note to remove.
+     */
+    public void removeNote(Note note){
+
+        noteIDs.remove(note.getID());
+        Database.getDatabase().deleteNote(note.getID());
 
     }
 
