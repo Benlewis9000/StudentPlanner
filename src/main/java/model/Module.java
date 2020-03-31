@@ -107,4 +107,11 @@ public class Module {
 
     }
 
+    @Override
+    public String toString(){
+
+        return getModuleCode();
+
+    }
+
 }

@@ -41,7 +41,13 @@ public class StudyProfile {
      */
     public UUID getID () { return ID; }
 
-    public Year getStartYear() { return startYear; }
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public Year getStartYear() {
+        return startYear;
+    }
 
 
     /**
@@ -103,6 +109,15 @@ public class StudyProfile {
 
     }
 
+    @Override
+    public String toString(){
+
+        int year1 = getStartYear().getValue();
+        int year2 = year1 + 1;
+
+        return year1 + "-" + year2 + " " + getSemester();
+
+    }
 
     // Test harness.
     public static void main(String[] args){

@@ -6,8 +6,9 @@ import java.util.UUID;
 public class StudyTask {
 
     private final UUID ID;
-    private final TaskType TYPE;
+    private final String title;
     private final int HOURS_REQUIRED;
+    private final TaskType TYPE;
     private HashSet<UUID> dependencyIDs;
     private HashSet<UUID> activityIDs;
     private HashSet<UUID> noteIDs;
@@ -15,17 +16,19 @@ public class StudyTask {
     // Todo: is this needed?
     /**
      * Constructor for StudyTask.
-     * @param taskType the type of task.
+     * @param title of task.
      * @param hoursRequired to complete the task.
+     * @param taskType the type of task.
      * @param dependencyIDs UUIDs of StudyTasks that must be completed before this one can begin.
      * @param activityIDs UUIDs of Activities that this task consists of.
      * @param noteIDs UUIDs of additional notes.
      */
-    public StudyTask(TaskType taskType, int hoursRequired, HashSet<UUID> dependencyIDs, HashSet<UUID> activityIDs, HashSet<UUID> noteIDs){
+    public StudyTask(String title, int hoursRequired, TaskType taskType, HashSet<UUID> dependencyIDs, HashSet<UUID> activityIDs, HashSet<UUID> noteIDs){
 
         this.ID = UUID.randomUUID();
-        this.TYPE = taskType;
+        this.title = title;
         this.HOURS_REQUIRED = hoursRequired;
+        this.TYPE = taskType;
         this.dependencyIDs = dependencyIDs;
         this.activityIDs = activityIDs;
         this.noteIDs = noteIDs;
@@ -39,15 +42,19 @@ public class StudyTask {
      * @param taskType the type of task.
      * @param hoursRequired to complete the task.
      */
-    public StudyTask(TaskType taskType, int hoursRequired){
+    public StudyTask(String title, int hoursRequired, TaskType taskType){
 
-        this(taskType, hoursRequired, new HashSet<UUID>(), new HashSet<UUID>(), new HashSet<UUID>());
+        this(title, hoursRequired, taskType, new HashSet<UUID>(), new HashSet<UUID>(), new HashSet<UUID>());
 
     }
 
 
     public UUID getID() {
         return ID;
+    }
+
+    public String getTitle(){
+        return title;
     }
 
     public TaskType getType() {
@@ -230,6 +237,12 @@ public class StudyTask {
 
     }
 
+    @Override
+    public String toString(){
+
+        return getTitle();
+
+    }
 
 }
 
