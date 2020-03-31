@@ -66,7 +66,7 @@ public class Tests {
         softEng.addDeliverable(exam);
         softEng.addDeliverable(milestone);
 
-        StudyTask studyTask1 = new StudyTask(TaskType.REVISION, 4);
+        StudyTask studyTask1 = new StudyTask("Revision", 4,TaskType.REVISION);
         milestone.addStudyTask(studyTask1);
 
         Activity activity1 = new Activity("Revised OSI 7 layers", 3);
@@ -74,7 +74,7 @@ public class Tests {
         studyTask1.addActivity(activity1);
         studyTask1.addActivity(activity2);
 
-        StudyTask studyTask2 = new StudyTask(TaskType.PROGRAMMING, 5);
+        StudyTask studyTask2 = new StudyTask("Lab Exercises", 5, TaskType.PROGRAMMING);
         milestone.addStudyTask(studyTask2);
 
         return studyProfile;

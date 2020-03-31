@@ -13,4 +13,11 @@ public enum Semester {
 
     }
 
+    @Override
+    public String toString(){
+
+        return this.name.toUpperCase();
+
+    }
+
 }
