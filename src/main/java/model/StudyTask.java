@@ -5,12 +5,12 @@ import java.util.UUID;
 
 public class StudyTask {
 
-    private final UUID ID;
+    private final String ID;
     private final TaskType TYPE;
     private final int HOURS_REQUIRED;
-    private HashSet<UUID> dependencyIDs;
-    private HashSet<UUID> activityIDs;
-    private HashSet<UUID> noteIDs;
+    private HashSet<String> dependencyIDs;
+    private HashSet<String> activityIDs;
+    private HashSet<String> noteIDs;
 
     // Todo: is this needed?
     /**
@@ -21,9 +21,9 @@ public class StudyTask {
      * @param activityIDs UUIDs of Activities that this task consists of.
      * @param noteIDs UUIDs of additional notes.
      */
-    public StudyTask(TaskType taskType, int hoursRequired, HashSet<UUID> dependencyIDs, HashSet<UUID> activityIDs, HashSet<UUID> noteIDs){
+    public StudyTask(TaskType taskType, int hoursRequired, HashSet<String> dependencyIDs, HashSet<String> activityIDs, HashSet<String> noteIDs){
 
-        this.ID = UUID.randomUUID();
+        this.ID = UUID.randomUUID().toString();
         this.TYPE = taskType;
         this.HOURS_REQUIRED = hoursRequired;
         this.dependencyIDs = dependencyIDs;
@@ -41,12 +41,12 @@ public class StudyTask {
      */
     public StudyTask(TaskType taskType, int hoursRequired){
 
-        this(taskType, hoursRequired, new HashSet<UUID>(), new HashSet<UUID>(), new HashSet<UUID>());
+        this(taskType, hoursRequired, new HashSet<>(), new HashSet<>(), new HashSet<>());
 
     }
 
 
-    public UUID getID() {
+    public String getID() {
         return ID;
     }
 
@@ -85,7 +85,7 @@ public class StudyTask {
      * @param uuid of the dependency.
      * @return true if this study task is dependent on that of the uuid given.
      */
-    public boolean hasStudyTaskDependency(UUID uuid){
+    public boolean hasStudyTaskDependency(String uuid){
 
         return this.noteIDs.contains(uuid);
 
@@ -97,7 +97,7 @@ public class StudyTask {
      * @return the instance of the StudyTask.
      * @throws IllegalArgumentException if the StudyTask is not a dependency or could not be found.
      */
-    public StudyTask getStudyTaskDependencyFromUUID(UUID uuid) throws IllegalArgumentException{
+    public StudyTask getStudyTaskDependencyFromUUID(String uuid) throws IllegalArgumentException{
 
         if (hasStudyTaskDependency(uuid)){
 
@@ -136,7 +136,7 @@ public class StudyTask {
      * @param uuid UUID of the Activity in question.
      * @return true if the UUID corresponds to an activity owned by this StudyTask.
      */
-    public boolean hasActivity(UUID uuid){
+    public boolean hasActivity(String uuid){
 
         return this.activityIDs.contains(uuid);
 
@@ -148,7 +148,7 @@ public class StudyTask {
      * @return the instance of the Activity.
      * @throws IllegalArgumentException if the Activity was not owned, or could not be found in the database.
      */
-    public Activity getActivityFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Activity getActivityFromUUID(String uuid) throws IllegalArgumentException{
 
         // Check StudyTask is an owner of the Activity
         if (hasActivity(uuid)){
@@ -186,7 +186,7 @@ public class StudyTask {
      * @param uuid UUID of the Note in question.
      * @return true if the UUID corresponds to a Note owned by this StudyTask.
      */
-    public boolean hasNote(UUID uuid){
+    public boolean hasNote(String uuid){
 
         return noteIDs.contains(uuid);
 
@@ -198,7 +198,7 @@ public class StudyTask {
      * @return the instance of the Note.
      * @throws IllegalArgumentException if the Note was not held, or could not be found in the database.
      */
-    public Note getNoteFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Note getNoteFromUUID(String uuid) throws IllegalArgumentException{
 
         if (hasNote(uuid)){
 

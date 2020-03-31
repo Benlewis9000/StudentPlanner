@@ -1,21 +1,20 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.UUID;
 
 public class Module {
 
-    private final UUID ID;
+    private final String ID;
     private final String moduleTitle;
     private final String moduleOrganiser;
     private final String moduleCode;
-    private HashSet<UUID> deliverableIDs;
+    private HashSet<String> deliverableIDs;
 
 
     public Module(String moduleTitle, String moduleOrganiser, String moduleCode){
 
-        this.ID = UUID.randomUUID();
+        this.ID = UUID.randomUUID().toString();
         this.moduleTitle = moduleTitle;
         this.moduleOrganiser = moduleOrganiser;
         this.moduleCode = moduleCode;
@@ -30,7 +29,7 @@ public class Module {
      * Get the UUID for the instance.
      * @return unique ID as UUID.
      */
-    public UUID getID() {
+    public String getID() {
 
         return ID;
 
@@ -54,7 +53,7 @@ public class Module {
      * @param uuid UUID of the Deliverable in question.
      * @return true if the UUID corresponds to a Deliverable owned by this Module.
      */
-    public boolean hasDeliverable(UUID uuid){
+    public boolean hasDeliverable(String uuid){
 
         return deliverableIDs.contains(uuid);
 
@@ -66,7 +65,7 @@ public class Module {
      * @return the instance of the Deliverable.
      * @throws IllegalArgumentException if the Deliverable was not held, or could not be found in the database.
      */
-    public Deliverable getDeliverableFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Deliverable getDeliverableFromUUID(String uuid) throws IllegalArgumentException{
 
         if (hasDeliverable(uuid)){
 

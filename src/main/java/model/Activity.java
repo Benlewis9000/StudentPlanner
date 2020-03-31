@@ -1,12 +1,10 @@
 package model;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.util.UUID;
 
 public class Activity {
 
-    private final UUID ID;
+    private final String ID;
     private String description;
     private int hoursTaken;
 
@@ -19,7 +17,7 @@ public class Activity {
     public Activity(String description, int hoursTaken) {
 
         // Generate random UUID
-        ID = UUID.randomUUID();
+        ID = UUID.randomUUID().toString();
 
         // Make sure hours set is positive and not 0
         if (hoursTaken < 0) hoursTaken = 1;
@@ -35,7 +33,7 @@ public class Activity {
      * Get the UUID for the instance.
      * @return unique ID as UUID.
      */
-    public UUID getID() {
+    public String getID() {
         return this.ID;
     }
 

@@ -1,36 +1,34 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
 public class Deliverable {
 
 
-    private final UUID ID;
+    private final String ID;
     private final DeliverableType TYPE;
     private String title;
     private String description;
     private LocalDate deadline;
-    private transient HashSet<UUID> studyTaskIDs;
-    private transient HashSet<UUID> noteIDs;
+    private transient HashSet<String> studyTaskIDs;
+    private transient HashSet<String> noteIDs;
     private final boolean isSummative;
     private transient boolean isComplete;     // Todo: how is completion set/calculated?
 
 
     public Deliverable(DeliverableType deliverableType, String title, String description, LocalDate deadline, boolean isSummative){
 
-        ID = UUID.randomUUID();
+        ID = UUID.randomUUID().toString();
         this.TYPE = deliverableType;
         this.title = title;
         this.description = description;
         this.deadline = deadline;
         this.isSummative = isSummative;
 
-        this.studyTaskIDs = new HashSet<UUID>();
-        this.noteIDs = new HashSet<UUID>();
+        this.studyTaskIDs = new HashSet<String>();
+        this.noteIDs = new HashSet<String>();
 
         saveToDatabase();
 
@@ -41,7 +39,7 @@ public class Deliverable {
      * Get the UUID for the instance.
      * @return unique ID as UUID.
      */
-    public UUID getID() {
+    public String getID() {
         return ID;
     }
 
@@ -85,7 +83,7 @@ public class Deliverable {
      * @param uuid UUID of the StudyTask in question.
      * @return true if the UUID corresponds to a StudyTask owned by this Deliverable.
      */
-    public boolean hasStudyTask(UUID uuid){
+    public boolean hasStudyTask(String uuid){
 
         return studyTaskIDs.contains(uuid);
 
@@ -97,7 +95,7 @@ public class Deliverable {
      * @return the instance of the StudyTask.
      * @throws IllegalArgumentException if the StudyTask was not held, or could not be found in the database.
      */
-    public StudyTask getStudyTaskFromUUID(UUID uuid) throws IllegalArgumentException{
+    public StudyTask getStudyTaskFromUUID(String uuid) throws IllegalArgumentException{
 
         if (hasStudyTask(uuid)){
 
@@ -135,7 +133,7 @@ public class Deliverable {
      * @param uuid UUID of the Note in question.
      * @return true if the UUID corresponds to a Note owned by this Deliverable.
      */
-    public boolean hasNote(UUID uuid){
+    public boolean hasNote(String uuid){
 
         return noteIDs.contains(uuid);
 
@@ -147,7 +145,7 @@ public class Deliverable {
      * @return the instance of the Note.
      * @throws IllegalArgumentException if the Note was not held, or could not be found in the database.
      */
-    public Note getNoteFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Note getNoteFromUUID(String uuid) throws IllegalArgumentException{
 
         if (hasNote(uuid)){
 

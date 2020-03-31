@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
@@ -12,10 +11,10 @@ import java.util.UUID;
 public class StudyProfile {
 
 
-    private final UUID ID;
+    private final String ID;
     private final Semester semester;
     private final Year startYear;
-    private HashSet<UUID> moduleIDs;
+    private HashSet<String> moduleIDs;
 
 
     /**
@@ -25,10 +24,10 @@ public class StudyProfile {
      */
     public StudyProfile(Semester semester, Year startYear){
 
-        this.ID = UUID.randomUUID();
+        this.ID = UUID.randomUUID().toString();
         this.semester = semester;
         this.startYear = startYear;
-        this.moduleIDs = new HashSet<>();
+        this.moduleIDs = new HashSet<String>();
 
         saveToDatabase();
 
@@ -39,7 +38,7 @@ public class StudyProfile {
      * Get the UUID for the instance.
      * @return unique ID as UUID.
      */
-    public UUID getID () { return ID; }
+    public String getID () { return ID; }
 
     public Year getStartYear() { return startYear; }
 
@@ -49,7 +48,7 @@ public class StudyProfile {
      * @param uuid UUID of the Module in question.
      * @return true if the UUID corresponds to a Module owned by this StudyProfile.
      */
-    public boolean hasModule(UUID uuid){
+    public boolean hasModule(String uuid){
 
         return moduleIDs.contains(uuid);
 
@@ -61,7 +60,7 @@ public class StudyProfile {
      * @return the instance of the Module.
      * @throws IllegalArgumentException if the Module was not held, or could not be found in the database.
      */
-    public Module getModuleFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Module getModuleFromUUID(String uuid) throws IllegalArgumentException{
 
         if (hasModule(uuid)){
 
@@ -122,7 +121,7 @@ public class StudyProfile {
 
         softEng.addDeliverable(Deliverable.generateDummy());
 
-        HashMap<UUID, Module> modules = new HashMap<>();
+        HashMap<String, Module> modules = new HashMap<>();
         modules.put(softEng.getID(), softEng);
         modules.put(networks.getID(), networks);
 

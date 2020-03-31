@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Note {
 
-    private final UUID ID;
+    private final String ID;
     private String name;
     private String description;
     private LocalDateTime dateCreated;
@@ -13,7 +13,7 @@ public class Note {
 
     public Note(String name, String description, LocalDateTime dateCreated){
 
-        ID = UUID.randomUUID();
+        ID = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.dateCreated = dateCreated;
@@ -22,7 +22,7 @@ public class Note {
 
     }
 
-    public UUID getID() {
+    public String getID() {
         return ID;
     }
 

@@ -24,16 +24,16 @@ public class Database {
 
 
     // Data being stored
-    private HashMap<UUID, StudyProfile> studyProfiles;
-    private HashMap<UUID, Module> modules;
-    private HashMap<UUID, Deliverable> deliverables;
-    private HashMap<UUID, StudyTask> studyTasks;
-    private HashMap<UUID, Activity> activities;
-    private HashMap<UUID, Note> notes;
+    private HashMap<String, StudyProfile> studyProfiles;
+    private HashMap<String, Module> modules;
+    private HashMap<String, Deliverable> deliverables;
+    private HashMap<String, StudyTask> studyTasks;
+    private HashMap<String, Activity> activities;
+    private HashMap<String, Note> notes;
 
 
-    public Database(HashMap<UUID, StudyProfile> studyProfiles, HashMap<UUID, Module> modules, HashMap<UUID, Deliverable> deliverables,
-                     HashMap<UUID, StudyTask> studyTasks, HashMap<UUID, Activity> activities, HashMap<UUID, Note> notes){
+    public Database(HashMap<String, StudyProfile> studyProfiles, HashMap<String, Module> modules, HashMap<String, Deliverable> deliverables,
+                    HashMap<String, StudyTask> studyTasks, HashMap<String, Activity> activities, HashMap<String, Note> notes){
 
         this.studyProfiles = studyProfiles;
         this.modules = modules;
@@ -65,12 +65,12 @@ public class Database {
 
             // ..else, create a new set of study profiles.
             System.out.println("Failed to read in data. Starting from scratch.");
-            studyProfiles = new HashMap<>();
-            modules = new HashMap<>();
-            deliverables = new HashMap<>();
-            studyTasks = new HashMap<>();
-            activities = new HashMap<>();
-            notes = new HashMap<>();
+            studyProfiles = new HashMap<String, StudyProfile>();
+            modules = new HashMap<String, Module>();
+            deliverables = new HashMap<String, Deliverable>();
+            studyTasks = new HashMap<String, StudyTask>();
+            activities = new HashMap<String, Activity>();
+            notes = new HashMap<String, Note>();
 
         }
 
@@ -108,24 +108,24 @@ public class Database {
 
     }
 
-    public boolean containsStudyProfile(UUID uuid){
+    public boolean containsStudyProfile(String uuid){
 
         return studyProfiles.containsKey(uuid);
 
     }
 
-    public StudyProfile getStudyProfileFromUUID(UUID uuid) throws IllegalArgumentException{
+    public StudyProfile getStudyProfileFromUUID(String uuid) throws IllegalArgumentException{
 
         if (containsStudyProfile(uuid)){
 
             return studyProfiles.get(uuid);
 
         }
-        else throw new IllegalArgumentException("StudyProfile " + uuid.toString() + " could not be found.");
+        else throw new IllegalArgumentException("StudyProfile " + uuid + " could not be found.");
 
     }
 
-    public void deleteStudyProfile(UUID uuid){
+    public void deleteStudyProfile(String uuid){
 
         studyProfiles.remove(uuid);
 
@@ -138,24 +138,24 @@ public class Database {
 
     }
 
-    public boolean containsModule(UUID uuid){
+    public boolean containsModule(String uuid){
 
         return modules.containsKey(uuid);
 
     }
 
-    public Module getModuleFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Module getModuleFromUUID(String uuid) throws IllegalArgumentException{
 
         if(containsModule(uuid)){
 
             return modules.get(uuid);
 
         }
-        else throw new IllegalArgumentException("Module " + uuid.toString() + " could not be found.");
+        else throw new IllegalArgumentException("Module " + uuid + " could not be found.");
 
     }
 
-    public void deleteModule(UUID uuid){
+    public void deleteModule(String uuid){
 
         modules.remove(uuid);
 
@@ -168,24 +168,24 @@ public class Database {
 
     }
 
-    public boolean containsDeliverable(UUID uuid){
+    public boolean containsDeliverable(String uuid){
 
         return deliverables.containsKey(uuid);
 
     }
 
-    public Deliverable getDeliverableFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Deliverable getDeliverableFromUUID(String uuid) throws IllegalArgumentException{
 
         if (containsDeliverable(uuid)){
 
             return deliverables.get(uuid);
 
         }
-        else throw new IllegalArgumentException("Deliverable " + uuid.toString() + " could not be found.");
+        else throw new IllegalArgumentException("Deliverable " + uuid + " could not be found.");
 
     }
 
-    public void deleteDeliverable(UUID uuid){
+    public void deleteDeliverable(String uuid){
 
         deliverables.remove(uuid);
 
@@ -198,24 +198,24 @@ public class Database {
 
     }
 
-    public boolean containsStudyTask(UUID uuid){
+    public boolean containsStudyTask(String uuid){
 
         return studyTasks.containsKey(uuid);
 
     }
 
-    public StudyTask getStudyTaskFromUUID(UUID uuid) throws IllegalArgumentException{
+    public StudyTask getStudyTaskFromUUID(String uuid) throws IllegalArgumentException{
 
         if (containsStudyTask(uuid)){
 
             return studyTasks.get(uuid);
 
         }
-        else throw new IllegalArgumentException("StudyTask " + uuid.toString() + " could not be found.");
+        else throw new IllegalArgumentException("StudyTask " + uuid + " could not be found.");
 
     }
 
-    public void deleteStudyTask(UUID uuid){
+    public void deleteStudyTask(String uuid){
 
         studyTasks.remove(uuid);
 
@@ -228,20 +228,20 @@ public class Database {
 
     }
 
-    public boolean containsActivity(UUID uuid){
+    public boolean containsActivity(String uuid){
 
         return activities.containsKey(uuid);
 
     }
 
-    public Activity getActivityFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Activity getActivityFromUUID(String uuid) throws IllegalArgumentException{
 
         if (containsActivity(uuid)){
 
             return activities.get(uuid);
 
         }
-        else throw new IllegalArgumentException("Activity " + uuid.toString() + " could not be found.");
+        else throw new IllegalArgumentException("Activity " + uuid + " could not be found.");
 
     }
 
@@ -258,24 +258,24 @@ public class Database {
 
     }
 
-    public boolean containsNote(UUID uuid){
+    public boolean containsNote(String uuid){
 
         return notes.containsKey(uuid);
 
     }
 
-    public Note getNoteFromUUID(UUID uuid) throws IllegalArgumentException{
+    public Note getNoteFromUUID(String uuid) throws IllegalArgumentException{
 
         if (containsNote(uuid)){
 
             return notes.get(uuid);
 
         }
-        else throw new IllegalArgumentException("Note " + uuid.toString() + " could not be found.");
+        else throw new IllegalArgumentException("Note " + uuid + " could not be found.");
 
     }
 
-    public void deleteNote(UUID uuid){
+    public void deleteNote(String uuid){
 
         notes.remove(uuid);
 
