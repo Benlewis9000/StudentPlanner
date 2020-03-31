@@ -52,30 +52,36 @@ public class Tests {
      */
     public static StudyProfile testModel(){
 
-        StudyProfile studyProfile = new StudyProfile(Semester.SPRING, Year.of(2020));
+        //StudyProfile studyProfile = new StudyProfile(Semester.SPRING, Year.of(2020));
+        StudyProfile studyProfile = new StudyProfile(Semester.AUTUMN, Year.of(2019));
 
-        Module softEng = new Module("SOFTWARE ENGINEERING 1", "Rudy Lapeer", "CMP-5012B");
-        Module networks = new Module("NETWORKS", "Ben Milner", "CMP-5037B");
-        studyProfile.addModule(softEng);
-        studyProfile.addModule(networks);
+        //Module softEng = new Module("SOFTWARE ENGINEERING 1", "Rudy Lapeer", "CMP-5012B");
+        //Module networks = new Module("NETWORKS", "Ben Milner", "CMP-5037B");
+        Module electronics = new Module("ELECTRONICS", "Ben Milner", "CMP-5037B");
+        //studyProfile.addModule(softEng);
+        //studyProfile.addModule(networks);
+        studyProfile.addModule(electronics);
 
         Deliverable exam = new Deliverable(DeliverableType.EXAM, "Final Exam", "2 hours, room C. HALL.",
                 LocalDate.of(2020, 6, 12), true);
         Deliverable milestone = new Deliverable(DeliverableType.MILESTONE, "Finish Revision", "Finish revising to start past papers",
                 LocalDate.of(2020, 6, 6), false);
-        softEng.addDeliverable(exam);
-        softEng.addDeliverable(milestone);
+        electronics.addDeliverable(exam);
+        electronics.addDeliverable(milestone);
 
         StudyTask studyTask1 = new StudyTask("Revision", 4,TaskType.REVISION);
         milestone.addStudyTask(studyTask1);
 
-        Activity activity1 = new Activity("Revised OSI 7 layers", 3);
-        Activity activity2 = new Activity("Revised subnet masking", 2);
+        Activity activity1 = new Activity("Revised gates", 3);
         studyTask1.addActivity(activity1);
-        studyTask1.addActivity(activity2);
 
-        StudyTask studyTask2 = new StudyTask("Lab Exercises", 5, TaskType.PROGRAMMING);
+        StudyTask studyTask2 = new StudyTask("Do Coursework", 5, TaskType.OTHER);
+        Activity activity2 = new Activity("Familiarised self with equipment", 2);
+        studyTask2.addActivity(activity2);
+
         milestone.addStudyTask(studyTask2);
+
+        Database.exportAsSemesterProfile(studyProfile);
 
         return studyProfile;
 

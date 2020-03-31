@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.HashMap;
 import java.util.UUID;
@@ -43,6 +44,29 @@ public class Database {
 
     }
 
+    public HashMap<UUID, StudyProfile> getStudyProfiles() {
+        return studyProfiles;
+    }
+
+    public HashMap<UUID, Module> getModules() {
+        return modules;
+    }
+
+    public HashMap<UUID, Deliverable> getDeliverables() {
+        return deliverables;
+    }
+
+    public HashMap<UUID, StudyTask> getStudyTasks() {
+        return studyTasks;
+    }
+
+    public HashMap<UUID, Activity> getActivities() {
+        return activities;
+    }
+
+    public HashMap<UUID, Note> getNotes() {
+        return notes;
+    }
 
     private static Database loadDatabaseFromFile(){
 
@@ -54,11 +78,14 @@ public class Database {
             JsonReader reader = new JsonReader(new FileReader(new File("database.json")));
             System.out.println("Successfully read in \"database.json\".");
 
+            Database database = gson.fromJson(reader, Database.class);
+            System.out.println("Successfully parsed \"database.json\".");
+
             // Deserialize json and return Database instance
-            return gson.fromJson(reader, Database.class);
+            return database;
 
         }
-        catch (IOException e){
+        catch (Exception e){
 
             // ..else, create a new set of study profiles.
             System.out.println("Failed to read in data. Starting from scratch.");
@@ -91,6 +118,96 @@ public class Database {
             e.printStackTrace();
 
         }
+
+    }
+
+    /**
+     * Export a StudyProfile out as a semester profile (to be used by hub)
+     * @param studyProfile containing relevant modules and deliverables.
+     */
+    public static void exportAsSemesterProfile(StudyProfile studyProfile){
+
+        // Database to hold data to export
+        Database exportDatabase = new Database();
+
+        // Add semesters study profile to database
+        exportDatabase.studyProfiles.put(studyProfile.getID(), studyProfile);
+
+        // Iterate modules owned by study profile and add to database
+        for (UUID moduleUUID : studyProfile.getModuleIDs()){
+
+            exportDatabase.modules.put(moduleUUID, getDatabase().modules.get(moduleUUID));
+
+            // Iterate deliverables owned by each module and add to database
+            for (UUID deliverableUUID : getDatabase().modules.get(moduleUUID).getDeliverableIDs()){
+
+                exportDatabase.deliverables.put(deliverableUUID, getDatabase().deliverables.get(deliverableUUID));
+
+            }
+
+        }
+
+        // Format file name
+        int startYear = studyProfile.getStartYear().getValue();
+        int endYear = startYear + 1;
+        String fileName = startYear + "-" + endYear + "-" + studyProfile.getSemester() + ".json";
+
+        // Serialize export database to json
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String semesterProfileJson = gson.toJson(exportDatabase, Database.class);
+
+        // Write json out to file
+        try {
+
+            Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "utf-8"));
+            writer.write(semesterProfileJson);
+            writer.close();
+
+
+        }
+        catch (IOException e){
+
+            e.printStackTrace();
+
+        }
+
+    }
+
+    /**
+     * Import a semester profile file.
+     * @param path to semester profile.
+     * @return whether import was successful.
+     */
+    public static boolean importSemesterProfile(String path){
+
+        // Database to import into
+        Database importedDatabase;
+
+        Gson gson = new Gson();
+
+        try {
+
+            // Attempt to read in a data file
+            JsonReader reader = new JsonReader(new FileReader(new File(path)));
+            System.out.println("Successfully read in " + path + ".");
+
+            // Deserialize json to get Database instance
+            importedDatabase = gson.fromJson(reader, Database.class);
+
+        }
+        catch (Exception e){
+
+            System.out.println("Error: failed to import Semester Profile from " + path + ".");
+            return false;
+
+        }
+
+        // Merge data into main database
+        getDatabase().studyProfiles.putAll(importedDatabase.studyProfiles);
+        getDatabase().modules.putAll(importedDatabase.modules);
+        getDatabase().deliverables.putAll(importedDatabase.deliverables);
+
+        return true;
 
     }
 

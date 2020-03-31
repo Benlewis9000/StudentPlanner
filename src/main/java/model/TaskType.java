@@ -8,7 +8,8 @@ enum TaskType {
     REVISION("Revising"),
     PROGRAMMING("Programming"),
     WRITING("Writing"),
-    RESEARCH("Research");
+    RESEARCH("Research"),
+    OTHER("Other");
 
     String name;
 

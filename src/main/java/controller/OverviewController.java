@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import model.Database;
 import model.StudyProfile;
 
@@ -28,9 +30,11 @@ public class OverviewController implements Initializable {
     @FXML
     private Button viewStudyDashboardButton;
     @FXML
-    private TextField semesterProfileTextField;
+    private TextField semesterProfilePathTextField;
     @FXML
-    private Button newStudyProfileButton;
+    private Button importStudyProfileButton;
+    @FXML
+    private Text failedToImportText;
 
 
     public void infoButtonPressed(){
@@ -60,16 +64,41 @@ public class OverviewController implements Initializable {
 
     }
 
-    public void newStudyProfileButtonPressed(){
+    public void importStudyProfileButtonPressed(){
 
         // Todo: go to new Scene to take in String of file location and load file then go to it's dashboard(?)
-        System.out.println("newStudyProfile button pressed.");
+        System.out.println("importStudyProfile button pressed.");
+
+        // Get path from text field input
+        String path = semesterProfilePathTextField.getText();
+
+        System.out.println(path);
+
+        // Attempt to import and show error message if failure.
+        if(Database.importSemesterProfile(path)) {
+
+            failedToImportText.setVisible(false);
+            semesterProfilePathTextField.setText("");
+
+        }
+        else failedToImportText.setVisible(false);
+
+        // Update the data displayed.
+        updateStudyProfileListView();
 
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        updateStudyProfileListView();
+
+        failedToImportText.setVisible(false);
+
+    }
+
+    public void updateStudyProfileListView(){
 
         ObservableList<StudyProfile> studyProfileObservables = FXCollections.observableArrayList(Database.getDatabase().getStudyProfiles().values());
         // Sort by year

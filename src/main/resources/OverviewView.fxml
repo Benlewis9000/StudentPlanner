@@ -133,7 +133,7 @@
                         </StackPane>
                         <StackPane prefHeight="26.0" prefWidth="374.0">
                            <children>
-                              <TextField fx:id="semsterProfileTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="e.g. C:/User/profile.json">
+                              <TextField fx:id="semesterProfilePathTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="e.g. C:/User/profile.json">
                                  <StackPane.margin>
                                     <Insets />
                                  </StackPane.margin>
@@ -145,7 +145,7 @@
                         </StackPane>
                         <StackPane layoutX="10.0" layoutY="10.0" prefHeight="0.0" prefWidth="374.0">
                            <children>
-                              <Button fx:id="newStudyProfileButton" mnemonicParsing="false" onAction="#newStudyProfileButtonPressed" prefHeight="0.0" prefWidth="122.0" text="New Study Profile">
+                              <Button fx:id="importStudyProfileButton" mnemonicParsing="false" onAction="#importStudyProfileButtonPressed" prefHeight="25.0" prefWidth="132.0" text="Import Study Profile">
                                  <StackPane.margin>
                                     <Insets bottom="5.0" top="5.0" />
                                  </StackPane.margin>
@@ -154,6 +154,11 @@
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
+                        </StackPane>
+                        <StackPane prefHeight="28.0" prefWidth="374.0">
+                           <children>
+                              <Text fx:id="failedToImportText" strokeType="OUTSIDE" strokeWidth="0.0" text="ERROR: Failed to import semester profile." />
+                           </children>
                         </StackPane>
                      </children>
                   </VBox>

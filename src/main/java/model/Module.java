@@ -99,6 +99,14 @@ public class Module {
     }
 
     /**
+     * Get all IDs of Deliverables owned by this Module.
+     * @return set of UUIDs.
+     */
+    public HashSet<UUID> getDeliverableIDs() {
+        return deliverableIDs;
+    }
+
+    /**
      * Save state of object to database, adding or overwriting corresponding UUID if present.
      */
     public void saveToDatabase(){

@@ -99,6 +99,14 @@ public class StudyProfile {
 
     }
 
+    /**
+     * Get all IDs of modules owned by this StudyProfile.
+     * @return set of UUIDs.
+     */
+    public HashSet<UUID> getModuleIDs() {
+        return moduleIDs;
+    }
+
 
     /**
      * Save state of object to database, adding or overwriting corresponding UUID if present.
