@@ -17,6 +17,7 @@ public class StudyProfile {
     private final Year startYear;
     private HashSet<UUID> moduleIDs;
 
+
     /**
      * Constructor for a new StudyProfile, generating a random UUID.
      * @param semester semester of study.
@@ -33,6 +34,7 @@ public class StudyProfile {
 
     }
 
+
     /**
      * Get the UUID for the instance.
      * @return unique ID as UUID.
@@ -41,7 +43,6 @@ public class StudyProfile {
 
     public Year getStartYear() { return startYear; }
 
-    ////////////////////////////
 
     /**
      * Query whether the StudyProfile has the Module corresponding to the given UUID.
@@ -92,7 +93,6 @@ public class StudyProfile {
 
     }
 
-    ////////////////////////////
 
     /**
      * Save state of object to database, adding or overwriting corresponding UUID if present.

@@ -22,6 +22,7 @@ public class Database {
         return DATABASE;
     }
 
+
     // Data being stored
     private HashMap<UUID, StudyProfile> studyProfiles;
     private HashMap<UUID, Module> modules;
@@ -31,7 +32,19 @@ public class Database {
     private HashMap<UUID, Note> notes;
 
 
-    /**
+    public Database(HashMap<UUID, StudyProfile> studyProfiles, HashMap<UUID, Module> modules, HashMap<UUID, Deliverable> deliverables,
+                     HashMap<UUID, StudyTask> studyTasks, HashMap<UUID, Activity> activities, HashMap<UUID, Note> notes){
+
+        this.studyProfiles = studyProfiles;
+        this.modules = modules;
+        this.deliverables = deliverables;
+        this.studyTasks = studyTasks;
+        this.activities = activities;
+        this.notes = notes;
+
+    }
+
+    /** Todo: refactor to a load method?
      * Load the database into the singleton reference.
      */
     private Database(){
@@ -42,9 +55,9 @@ public class Database {
 
             // Attempt to read in a data file
             JsonReader reader = new JsonReader(new FileReader(new File("database.json")));
-            Database loadedManager = gson.fromJson(reader, StudyProfile.class);
+            Database loadedDatabase = gson.fromJson(reader, Database.class);
             // Set study profiles to those loaded in
-            studyProfiles = loadedManager.studyProfiles;
+            studyProfiles = loadedDatabase.studyProfiles;
             System.out.println("Successfully read in \"database.json\".");
 
         }
