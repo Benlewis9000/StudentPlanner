@@ -1,10 +1,9 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Deliverable {
 
@@ -190,4 +189,16 @@ public class Deliverable {
 
     }
 
+    /**
+     *Used to return an int value indicating which date comes first
+     * @param date1
+     * @param date2
+     * @return
+     */
+
+
+
+    public int CompareTwoDates(LocalDate date1, LocalDate date2){
+        return(date1.compareTo(date2));
+    }
 }
