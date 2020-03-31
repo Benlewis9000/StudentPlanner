@@ -12,7 +12,7 @@ public class Database {
 
 
     // Singleton pattern reference
-    private static final Database DATABASE = new Database();
+    private static final Database DATABASE = loadDatabaseFromFile();
 
     /**
      * Accessor to single Database instance.
@@ -32,45 +32,37 @@ public class Database {
     private HashMap<UUID, Note> notes;
 
 
-    public Database(HashMap<UUID, StudyProfile> studyProfiles, HashMap<UUID, Module> modules, HashMap<UUID, Deliverable> deliverables,
-                     HashMap<UUID, StudyTask> studyTasks, HashMap<UUID, Activity> activities, HashMap<UUID, Note> notes){
+    private Database(){
 
-        this.studyProfiles = studyProfiles;
-        this.modules = modules;
-        this.deliverables = deliverables;
-        this.studyTasks = studyTasks;
-        this.activities = activities;
-        this.notes = notes;
+        studyProfiles = new HashMap<>();
+        modules = new HashMap<>();
+        deliverables = new HashMap<>();
+        studyTasks = new HashMap<>();
+        activities = new HashMap<>();
+        notes = new HashMap<>();
 
     }
 
-    /** Todo: refactor to a load method?
-     * Load the database into the singleton reference.
-     */
-    private Database(){
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static Database loadDatabaseFromFile(){
+
+        Gson gson = new Gson();
 
         try {
 
             // Attempt to read in a data file
             JsonReader reader = new JsonReader(new FileReader(new File("database.json")));
-            Database loadedDatabase = gson.fromJson(reader, Database.class);
-            // Set study profiles to those loaded in
-            studyProfiles = loadedDatabase.studyProfiles;
             System.out.println("Successfully read in \"database.json\".");
+
+            // Deserialize json and return Database instance
+            return gson.fromJson(reader, Database.class);
 
         }
         catch (IOException e){
 
             // ..else, create a new set of study profiles.
             System.out.println("Failed to read in data. Starting from scratch.");
-            studyProfiles = new HashMap<>();
-            modules = new HashMap<>();
-            deliverables = new HashMap<>();
-            studyTasks = new HashMap<>();
-            activities = new HashMap<>();
-            notes = new HashMap<>();
+            return new Database();
 
         }
 

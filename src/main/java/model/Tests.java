@@ -13,6 +13,8 @@ public class Tests {
 
         testModel();
 
+        testDatabaseSave();
+
     }
 
     /**
@@ -44,7 +46,11 @@ public class Tests {
 
     }
 
-    public static void testModel(){
+    /**
+     * Create a filled StudyProfile instance that is automatically saved to the database.
+     * @return the StudyProfile created.
+     */
+    public static StudyProfile testModel(){
 
         StudyProfile studyProfile = new StudyProfile(Semester.SPRING, Year.of(2020));
 
@@ -70,6 +76,15 @@ public class Tests {
 
         StudyTask studyTask2 = new StudyTask(TaskType.PROGRAMMING, 5);
         milestone.addStudyTask(studyTask2);
+
+        return studyProfile;
+
+    }
+
+    /**
+     * Test saving the database state out to a file.
+     */
+    public static void testDatabaseSave(){
 
         Database.getDatabase().saveDatabaseToFile();
 
