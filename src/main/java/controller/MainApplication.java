@@ -16,6 +16,7 @@ public class MainApplication extends Application {
     private static MainApplication instance;
 
     private Stage stage;
+    private Scene overviewScene, modulesScene;
 
     /**
      * Get the single instance for the application.
@@ -43,17 +44,35 @@ public class MainApplication extends Application {
         return stage;
     }
 
+    /**
+     * Get scene instance for the OverviewView.
+     * @return the scene.
+     */
+    public Scene getOverviewScene() {
+        return overviewScene;
+    }
+
+    /**
+     * Get scene instance for the ModulesView.
+     * @return the scene.
+     */
+    public Scene getModulesScene() {
+        return modulesScene;
+    }
+
     @Override
     public void start(Stage stage) throws IOException{
 
         this.stage = stage;
 
-       Parent root = FXMLLoader.load(this.getClass().getResource("/OverviewView.fxml"));
+        Parent overviewRoot = FXMLLoader.load(this.getClass().getResource("/OverviewView.fxml"));
+        overviewScene = new Scene(overviewRoot);
 
-        Scene scene = new Scene(root);
+        Parent modulesRoot = FXMLLoader.load(this.getClass().getResource("/ModulesView.fxml"));
+        modulesScene = new Scene(modulesRoot);
 
         // Set up scene
-        stage.setScene(scene);
+        stage.setScene(overviewScene);
         stage.setTitle("Study Planner");
         stage.setResizable(false);
         stage.show();
