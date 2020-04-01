@@ -45,6 +45,9 @@ public class ModulesController implements Initializable {
         String description = milestoneDescriptionTextField.getText();
         LocalDate deadline = milestoneDeadlineDatePicker.getValue();
 
+        // Prematurely hide success text
+        successText.setVisible(false);
+
         if (title.equals("")
                 || description.equals("")
                 || deadline == null
@@ -65,6 +68,7 @@ public class ModulesController implements Initializable {
             Deliverable milestone = new Deliverable(DeliverableType.MILESTONE, title, description, deadline, false);
             Database.getDatabase().getModules().get(module.getID()).addDeliverable(milestone);
             errorText.setVisible(false);
+            successText.setVisible(true);
 
         }
 
