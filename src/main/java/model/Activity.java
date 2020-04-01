@@ -49,7 +49,7 @@ public class Activity {
      * Accessor for hoursTaken.
      * @return the hours taken to complete the Activity.
      */
-    public int getHoursTaken() { return this.getHoursTaken(); }
+    public int getHoursTaken() { return this.hoursTaken; }
 
     /**
      * Save state of object to database, adding or overwriting corresponding UUID if present.
@@ -57,6 +57,13 @@ public class Activity {
     public void saveToDatabase(){
 
         Database.getDatabase().addActivity(this);
+
+    }
+
+    @Override
+    public String toString(){
+
+        return getDescription();
 
     }
 

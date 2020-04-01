@@ -60,18 +60,6 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </HBox>
-                        <StackPane prefHeight="37.0" prefWidth="218.0">
-                           <children>
-                              <Button fx:id="viewStudyDashboardButton" mnemonicParsing="false" onAction="#viewStudyDashboardButtonPressed" prefHeight="25.0" prefWidth="186.0" text="View Study Dashboard">
-                                 <StackPane.margin>
-                                    <Insets bottom="5.0" />
-                                 </StackPane.margin>
-                              </Button>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </VBox.margin>
-                        </StackPane>
                      </children>
                   </VBox>
                </children>

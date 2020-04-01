@@ -116,13 +116,6 @@ public class OverviewController implements Initializable {
 
     }
 
-    public void viewStudyDashboardButtonPressed(){
-
-        // Todo: go to StudyDashboard scene for selected profile
-        System.out.println("#viewStudyDashboard button pressed.");
-
-    }
-
     /**
      * Attempt to import a semester profile from the path given in a text field.
      */

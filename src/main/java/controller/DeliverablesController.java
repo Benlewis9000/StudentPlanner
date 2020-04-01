@@ -3,7 +3,10 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
@@ -14,6 +17,7 @@ import model.Module;
 import model.StudyTask;
 import model.TaskType;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -92,7 +96,34 @@ public class DeliverablesController implements Initializable {
 
         System.out.println("#viewStudyTasksButtonPressed");
 
-        // todo: go to studytasks view and pass a studytask to initData()
+        Deliverable deliverable = deliverablesListView.getSelectionModel().getSelectedItem();
+
+        if (deliverable != null){
+
+            try {
+
+                changeToStudyTasksView(deliverable);
+                feedbackText.setVisible(false);
+
+            }
+            catch (IOException e){
+
+                // Display error messages
+                feedbackText.setText("ERROR: Failed to load scene.");
+                feedbackText.setVisible(true);
+                System.out.println("Error: failed to load StudyTasksView.fxml. Could not create scene.");
+                e.printStackTrace();
+
+            }
+
+        }
+        // Else set and display error message.
+        else {
+
+            feedbackText.setText("ERROR: Please select a deliverable to view.");
+            feedbackText.setVisible(true);
+
+        }
 
     }
 
@@ -114,39 +145,39 @@ public class DeliverablesController implements Initializable {
 
             feedbackText.setText("ERROR: Fields may not be empty!");
             feedbackText.setVisible(true);
-            return;
 
         }
+        else {
 
-        int hoursInt;
+            int hoursInt;
 
-        try {
+            try {
 
-            hoursInt = Integer.parseInt(hours);
+                hoursInt = Integer.parseInt(hours);
 
-            // Prevent hours less than 0
-            if (hoursInt < 1){
+                // Prevent hours less than 0
+                if (hoursInt < 1) {
 
-                feedbackText.setText("ERROR: Hours required may not be less than 1!");
+                    feedbackText.setText("ERROR: Hours required may not be less than 1!");
+                    feedbackText.setVisible(true);
+
+                } else {
+
+                    // Create study task instance and add to deliverable
+                    StudyTask studyTask = new StudyTask(title, hoursInt, type);
+                    deliverable.addStudyTask(studyTask);
+                    // Display success text
+                    feedbackText.setText("Successfully added Study Task!");
+                    feedbackText.setVisible(true);
+
+                }
+
+            } catch (NumberFormatException e) {
+
+                feedbackText.setText("ERROR: Fields may not be empty!");
                 feedbackText.setVisible(true);
 
             }
-            else {
-
-                // Create study task instance and add to deliverable
-                StudyTask studyTask = new StudyTask(title, hoursInt, type);
-                deliverable.addStudyTask(studyTask);
-                // Display success text
-                feedbackText.setText("Successfully added Study Task!");
-                feedbackText.setVisible(true);
-
-            }
-
-        }
-        catch (NumberFormatException e){
-
-            feedbackText.setText("ERROR: Fields may not be empty!");
-            feedbackText.setVisible(true);
 
         }
 
@@ -162,6 +193,24 @@ public class DeliverablesController implements Initializable {
 
     }
 
+    public void changeToStudyTasksView(Deliverable deliverable) throws IOException {
+
+        // Load FXML and set as root
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/StudyTasksView.fxml"));
+        Parent studyTasksRoot = loader.load();
+
+        // Create scene
+        Scene studyTasksScene = new Scene(studyTasksRoot);
+
+        // Get StudyTasksView controller and initialise data
+        StudyTasksController controller = loader.getController();
+        controller.initData(deliverable);
+
+        // Change scenes
+        MainApplication.getApplication().getStage().setScene(studyTasksScene);
+
+    }
 
     /**
      * Reload and update the deliverables displayed in the observable list.
@@ -183,6 +232,12 @@ public class DeliverablesController implements Initializable {
         deliverableObservables.sort((deliverable1, deliverable2) -> (deliverable1.getDeadline().compareTo(deliverable2.getDeadline())));
         // Set the deliverables list
         deliverablesListView.setItems(deliverableObservables);
+
+    }
+
+    public void goToOverviewScene(){
+
+        MainApplication.getApplication().getStage().setScene(MainApplication.getApplication().getOverviewScene());
 
     }
 

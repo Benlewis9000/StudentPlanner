@@ -63,6 +63,13 @@ public class Deliverable {
         return isSummative;
     }
 
+    public HashSet<UUID> getStudyTaskIDs() {
+        return studyTaskIDs;
+    }
+
+    public HashSet<UUID> getNoteIDs() {
+        return noteIDs;
+    }
 
     /**
      * Save state of object to database, adding or overwriting corresponding UUID if present.

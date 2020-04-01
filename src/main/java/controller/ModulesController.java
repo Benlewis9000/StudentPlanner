@@ -219,4 +219,10 @@ public class ModulesController implements Initializable {
 
     }
 
+    public void goToOverviewScene(){
+
+        MainApplication.getApplication().getStage().setScene(MainApplication.getApplication().getOverviewScene());
+
+    }
+
 }

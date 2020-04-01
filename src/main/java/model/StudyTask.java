@@ -65,6 +65,17 @@ public class StudyTask {
         return HOURS_REQUIRED;
     }
 
+    public HashSet<UUID> getDependencyIDs() {
+        return dependencyIDs;
+    }
+
+    public HashSet<UUID> getActivityIDs() {
+        return activityIDs;
+    }
+
+    public HashSet<UUID> getNoteIDs() {
+        return noteIDs;
+    }
 
     /**
      * Save state of object to database, adding or overwriting corresponding UUID if present.
