@@ -13,7 +13,7 @@ public class StudyTask {
     private HashSet<UUID> activityIDs;
     private HashSet<UUID> noteIDs;
 
-    // Todo: is this needed?
+
     /**
      * Constructor for StudyTask.
      * @param title of task.

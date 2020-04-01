@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 public class OverviewController implements Initializable {
 
+
     @FXML
     private ListView<StudyProfile> studyProfileListView;
     @FXML
@@ -37,37 +38,38 @@ public class OverviewController implements Initializable {
     private Text failedToImportText;
 
 
-    public void infoButtonPressed(){
-
-        System.out.println("Info button pressed.");
-
-    }
-
     public void modulesButtonPressed(){
 
-        // Todo: go to new Scene that displays modules
-        System.out.println("Modules button pressed.");
+        System.out.println("#modules button pressed.");
+        MainApplication.getApplication().getStage().setScene(MainApplication.getApplication().getModulesScene());
 
     }
 
     public void deleteButtonPressed(){
 
-        // Todo: delete the StudyProfile from database and remove from list
-        System.out.println("Delete button pressed.");
+        System.out.println("#delete button pressed.");
+
+        // Get the StudyProfile selected
+        StudyProfile studyProfile = studyProfileListView.getSelectionModel().getSelectedItem();
+
+        // Delete from database
+        Database.getDatabase().deleteStudyProfile(studyProfile.getID());
+
+        // Update list view
+        updateStudyProfileListView();
 
     }
 
     public void viewStudyDashboardButtonPressed(){
 
         // Todo: go to StudyDashbboard scene for selected profile
-        System.out.println("viewStudyDashboard button pressed.");
+        System.out.println("#viewStudyDashboard button pressed.");
 
     }
 
     public void importStudyProfileButtonPressed(){
 
-        // Todo: go to new Scene to take in String of file location and load file then go to it's dashboard(?)
-        System.out.println("importStudyProfile button pressed.");
+        System.out.println("#importStudyProfile button pressed.");
 
         // Get path from text field input
         String path = semesterProfilePathTextField.getText();
@@ -98,6 +100,9 @@ public class OverviewController implements Initializable {
 
     }
 
+    /**
+     * Update the data in the StudyProfile list view.
+     */
     public void updateStudyProfileListView(){
 
         ObservableList<StudyProfile> studyProfileObservables = FXCollections.observableArrayList(Database.getDatabase().getStudyProfiles().values());

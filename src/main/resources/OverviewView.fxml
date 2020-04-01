@@ -100,7 +100,7 @@
                         </StackPane>
                         <StackPane prefHeight="5.0" prefWidth="374.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To get started, import a Semester Profile JSON file as provided by your hub. Do this by entering the button in the text field bnelow and hitting the button." textAlignment="CENTER" wrappingWidth="333.154296875">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To get started, import a Semester Profile JSON file as provided by your hub. Do this by entering the button in the text field below and hitting the button." textAlignment="CENTER" wrappingWidth="333.154296875">
                                  <StackPane.margin>
                                     <Insets bottom="15.0" />
                                  </StackPane.margin>
