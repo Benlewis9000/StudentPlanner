@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeliverablesController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox prefHeight="398.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Deliverables">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="353.0" prefWidth="195.0">
+                           <children>
+                              <ListView fx:id="deliverablesListView" onMouseClicked="#deliverablesListViewClicked" prefHeight="312.0" prefWidth="204.0" />
+                              <ScrollBar fx:id="studyProfileScrollBar" orientation="VERTICAL" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <StackPane layoutX="58.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="viewStudyTasksButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewStudyTasksButtonPressed" prefHeight="25.0" prefWidth="187.0" text="View Study Tasks">
+                                       <StackPane.margin>
+                                          <Insets left="15.0" />
+                                       </StackPane.margin>
+                                    </Button>
+                                 </children>
+                              </StackPane>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="374.0">
+               <children>
+                  <VBox prefHeight="398.0" prefWidth="374.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <StackPane alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" prefHeight="83.0" prefWidth="374.0">
+                           <children>
+                              <Label prefHeight="53.0" prefWidth="316.0" text="Study Planner" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="48.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="99.0" prefWidth="374.0">
+                           <children>
+                              <GridPane maxWidth="-Infinity" prefHeight="69.0" prefWidth="298.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="102.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="192.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Title: " />
+                                    <Label layoutX="10.0" layoutY="13.0" text="Description: " GridPane.rowIndex="1" />
+                                    <Label layoutX="10.0" layoutY="36.0" text="Deadline: " GridPane.rowIndex="2" />
+                                    <Text fx:id="deliverableTitleText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.13671875" GridPane.columnIndex="1" />
+                                    <Text fx:id="deliverableDescriptionText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="185.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Text fx:id="deliverableDeadlineText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Type: " GridPane.rowIndex="3" />
+                                    <Label text="Summative:" GridPane.rowIndex="4" />
+                                    <Text fx:id="deliverableTypeText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Text fx:id="deliverableSummativeText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                 </children>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </GridPane>
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="374.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create new Study Task" wrappingWidth="180.13671875">
+                                 <StackPane.margin>
+                                    <Insets left="38.0" top="5.0" />
+                                 </StackPane.margin>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </StackPane>
+                        <StackPane prefHeight="26.0" prefWidth="374.0">
+                           <children>
+                              <TextField fx:id="studyTaskTitleTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="Title">
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </StackPane>
+                        <StackPane prefHeight="26.0" prefWidth="374.0">
+                           <children>
+                              <TextField fx:id="studyTaskHoursRequiredTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="Hours required to complete">
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </StackPane>
+                        <StackPane layoutX="10.0" layoutY="185.0" prefHeight="26.0" prefWidth="374.0">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <StackPane alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="137.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="99.0" text="Study Task type: " />
+                                       </children>
+                                    </StackPane>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <ChoiceBox fx:id="studyTaskTypeChoiceBox" prefHeight="25.0" prefWidth="215.0" />
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </StackPane>
+                        <StackPane layoutX="10.0" layoutY="10.0" prefHeight="0.0" prefWidth="374.0">
+                           <children>
+                              <Button fx:id="addNewStudyTaskButton" mnemonicParsing="false" onAction="#addNewStudyTaskButtonPressed" prefHeight="25.0" prefWidth="132.0" text="Add new Study Task">
+                                 <StackPane.margin>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </StackPane.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </StackPane>
+                        <StackPane prefHeight="28.0" prefWidth="374.0">
+                           <children>
+                              <Text fx:id="feedbackText" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
