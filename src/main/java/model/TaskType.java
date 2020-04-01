@@ -3,7 +3,7 @@ package model;
 /**
  * Enum to state what type of task a StudyTask is.
  */
-enum TaskType {
+public enum TaskType {
 
     REVISION("Revising"),
     PROGRAMMING("Programming"),
@@ -15,7 +15,7 @@ enum TaskType {
 
     TaskType(String name){
 
-        name = name;
+        this.name = name;
 
     }
 

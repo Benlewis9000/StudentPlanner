@@ -1,10 +1,12 @@
 package controller;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
@@ -13,8 +15,8 @@ import javafx.scene.text.Text;
 import model.Database;
 import model.StudyProfile;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 public class OverviewController implements Initializable {
@@ -35,16 +37,55 @@ public class OverviewController implements Initializable {
     @FXML
     private Button importStudyProfileButton;
     @FXML
-    private Text failedToImportText;
+    private Text feedbackText;
 
 
+    /**
+     * Go to the modules view for the study profile selected.
+     */
     public void modulesButtonPressed(){
 
         System.out.println("#modules button pressed.");
-        MainApplication.getApplication().getStage().setScene(MainApplication.getApplication().getModulesScene());
+
+        // Get the StudyProfile selected
+        StudyProfile studyProfile = studyProfileListView.getSelectionModel().getSelectedItem();
+
+        // Check a study profile was selected
+        if (studyProfile != null) {
+
+            try {
+
+                // Pass study profile and switch scene
+                changeToModulesView(studyProfile);
+
+                // Hide feedback message
+                feedbackText.setVisible(false);
+
+            } catch (IOException e) {
+
+                // Display error messages
+                feedbackText.setText("ERROR: Failed to load scene.");
+                feedbackText.setVisible(true);
+                System.out.println("Error: failed to load ModulesView.fxml. Could not create scene.");
+                e.printStackTrace();
+
+            }
+
+
+        }
+        // Else set and display error message.
+        else {
+
+            feedbackText.setText("ERROR: Please select a study profile to view.");
+            feedbackText.setVisible(true);
+
+        }
 
     }
 
+    /**
+     *
+     */
     public void deleteButtonPressed(){
 
         System.out.println("#delete button pressed.");
@@ -52,21 +93,39 @@ public class OverviewController implements Initializable {
         // Get the StudyProfile selected
         StudyProfile studyProfile = studyProfileListView.getSelectionModel().getSelectedItem();
 
-        // Delete from database
-        Database.getDatabase().deleteStudyProfile(studyProfile.getID());
+        if (studyProfile != null) {
 
-        // Update list view
-        updateStudyProfileListView();
+            // Delete from database
+            Database.getDatabase().deleteStudyProfile(studyProfile.getID());
+
+            // Set and display success message.
+            feedbackText.setText("Successfully deleted study profile. ");
+            feedbackText.setVisible(true);
+
+            // Update list view
+            updateStudyProfileListView();
+
+        }
+        else {
+
+            // Set and display error message.
+            feedbackText.setText("ERROR: Please select a study profile to delete.");
+            feedbackText.setVisible(true);
+
+        }
 
     }
 
     public void viewStudyDashboardButtonPressed(){
 
-        // Todo: go to StudyDashbboard scene for selected profile
+        // Todo: go to StudyDashboard scene for selected profile
         System.out.println("#viewStudyDashboard button pressed.");
 
     }
 
+    /**
+     * Attempt to import a semester profile from the path given in a text field.
+     */
     public void importStudyProfileButtonPressed(){
 
         System.out.println("#importStudyProfile button pressed.");
@@ -77,13 +136,21 @@ public class OverviewController implements Initializable {
         System.out.println(path);
 
         // Attempt to import and show error message if failure.
-        if(Database.importSemesterProfile(path)) {
+        if(!Database.importSemesterProfile(path)) {
 
-            failedToImportText.setVisible(false);
+            // Set and display error message.
+            feedbackText.setText("ERROR: Failed to import semester profile.");
+            feedbackText.setVisible(true);
+
+        }
+        else {
+
+            // Set and display success message, clear fields
+            feedbackText.setVisible(true);
+            feedbackText.setText("Successfully imported semester profile! ");
             semesterProfilePathTextField.setText("");
 
         }
-        else failedToImportText.setVisible(false);
 
         // Update the data displayed.
         updateStudyProfileListView();
@@ -96,7 +163,31 @@ public class OverviewController implements Initializable {
 
         updateStudyProfileListView();
 
-        failedToImportText.setVisible(false);
+        feedbackText.setVisible(false);
+
+    }
+
+    /**
+     * Change to the ModulesView scene for a select StudyProfile.
+     * @param studyProfile to view modules of.
+     * @throws IOException if fails to load fxml resource.
+     */
+    public void changeToModulesView(StudyProfile studyProfile) throws IOException{
+
+        // Load FXML file and set as root
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/ModulesView.fxml"));
+        Parent modulesRoot = loader.load();
+
+        // Create scene
+        Scene modulesScene = new Scene(modulesRoot);
+
+        // Get ModulesView controller and initialise study profile data
+        ModulesController controller = loader.getController();
+        controller.initData(studyProfile);
+
+        // Change scenes
+        MainApplication.getApplication().getStage().setScene(modulesScene);
 
     }
 

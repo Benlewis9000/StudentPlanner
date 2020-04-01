@@ -9,7 +9,10 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -33,7 +36,7 @@
                         </Label>
                         <HBox prefHeight="353.0" prefWidth="195.0">
                            <children>
-                              <ListView fx:id="modulesListView" prefHeight="312.0" prefWidth="204.0" />
+                              <ListView fx:id="modulesListView" onMouseClicked="#modulesListViewClicked" prefHeight="312.0" prefWidth="204.0" />
                               <ScrollBar fx:id="studyProfileScrollBar" orientation="VERTICAL" />
                            </children>
                         </HBox>
@@ -70,6 +73,32 @@
                               </Label>
                            </children>
                         </StackPane>
+                        <StackPane prefHeight="69.0" prefWidth="374.0">
+                           <children>
+                              <GridPane maxWidth="-Infinity" prefHeight="69.0" prefWidth="298.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="102.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="192.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Module Code: " />
+                                    <Label layoutX="10.0" layoutY="13.0" text="Module Title: " GridPane.rowIndex="1" />
+                                    <Label layoutX="10.0" layoutY="36.0" text="Module Organiser: " GridPane.rowIndex="2" />
+                                    <Text fx:id="moduleCodeText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.13671875" GridPane.columnIndex="1" />
+                                    <Text fx:id="moduleTitleText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="185.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Text fx:id="moduleOrganiserText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 </children>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </GridPane>
+                           </children>
+                        </StackPane>
                         <StackPane alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="374.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create new Milestone" wrappingWidth="180.13671875">
@@ -82,7 +111,7 @@
                               </Text>
                            </children>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets top="10.0" />
                            </VBox.margin>
                         </StackPane>
                         <StackPane prefHeight="26.0" prefWidth="374.0">
@@ -131,8 +160,7 @@
                         </StackPane>
                         <StackPane prefHeight="28.0" prefWidth="374.0">
                            <children>
-                              <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" text="ERROR: An error occured." />
-                              <Text fx:id="successText" layoutX="130.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Milestone succesfully added!" />
+                              <Text fx:id="feedbackText" strokeType="OUTSIDE" strokeWidth="0.0" text="ERROR: An error occured." />
                            </children>
                         </StackPane>
                      </children>

@@ -157,7 +157,7 @@
                         </StackPane>
                         <StackPane prefHeight="28.0" prefWidth="374.0">
                            <children>
-                              <Text fx:id="failedToImportText" strokeType="OUTSIDE" strokeWidth="0.0" text="ERROR: Failed to import semester profile." />
+                              <Text fx:id="feedbackText" strokeType="OUTSIDE" strokeWidth="0.0" text="ERROR: Failed to import semester profile." />
                            </children>
                         </StackPane>
                      </children>

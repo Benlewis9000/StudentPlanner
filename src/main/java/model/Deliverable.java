@@ -13,10 +13,9 @@ public class Deliverable {
     private String title;
     private String description;
     private LocalDate deadline;
-    private transient HashSet<UUID> studyTaskIDs;
-    private transient HashSet<UUID> noteIDs;
+    private HashSet<UUID> studyTaskIDs;
+    private HashSet<UUID> noteIDs;
     private final boolean isSummative;
-    private transient boolean isComplete;     // Todo: how is completion set/calculated?
 
 
     public Deliverable(DeliverableType deliverableType, String title, String description, LocalDate deadline, boolean isSummative){
@@ -58,10 +57,6 @@ public class Deliverable {
 
     public LocalDate getDeadline() {
         return deadline;
-    }
-
-    public boolean isComplete() {
-        return isComplete;
     }
 
     public boolean isSummative() {
@@ -178,6 +173,12 @@ public class Deliverable {
 
     }
 
+    @Override
+    public String toString(){
+
+        return this.title;
+
+    }
 
     /**
      * Generate a dummy instance for testing with set values.
@@ -189,16 +190,4 @@ public class Deliverable {
 
     }
 
-    /**
-     *Used to return an int value indicating which date comes first
-     * @param date1
-     * @param date2
-     * @return
-     */
-
-
-
-    public int CompareTwoDates(LocalDate date1, LocalDate date2){
-        return(date1.compareTo(date2));
-    }
 }
