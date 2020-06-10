@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,7 +17,7 @@ public class Module {
     private String moduleTitle;
     private String moduleOrganiser;
     private String moduleCode;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<UUID> deliverableIDs;
 
     /*

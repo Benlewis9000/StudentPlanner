@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -19,9 +20,9 @@ public class Deliverable {
     private String title;
     private String description;
     private LocalDate deadline;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<UUID> studyTaskIDs;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<UUID> noteIDs;
     private boolean isSummative;
 

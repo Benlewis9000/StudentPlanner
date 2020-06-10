@@ -47,24 +47,6 @@ public class Database {
         activities = new HashMap<>();
         notes = new HashMap<>();
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-
-        List<StudyProfile> eStudyProfiles = em.createQuery("SELECT e FROM StudyProfile e", StudyProfile.class).getResultList();
-        List<Module> eModules = em.createQuery("SELECT e FROM Module e", Module.class).getResultList();
-        List<Deliverable> eDeliverables = em.createQuery("SELECT e FROM Deliverable e", Deliverable.class).getResultList();
-        List<StudyTask> eStudyTasks = em.createQuery("SELECT e FROM StudyTask e", StudyTask.class).getResultList();
-        List<Activity> eActivities = em.createQuery("SELECT e FROM Activity e", Activity.class).getResultList();
-        List<Note> eNotes = em.createQuery("SELECT e FROM Note e", Note.class).getResultList();
-
-        eStudyProfiles.forEach((e) -> studyProfiles.put(e.getID(), e));
-        eModules.forEach((e) -> modules.put(e.getID(), e));
-        eDeliverables.forEach((e) -> deliverables.put(e.getID(), e));
-        eStudyTasks.forEach((e) -> studyTasks.put(e.getID(), e));
-        eActivities.forEach((e) -> activities.put(e.getID(), e));
-        eNotes.forEach((e) -> notes.put(e.getID(), e));
-
         // activities = loadEntities(Activity.class, em);
 
     }
@@ -133,8 +115,8 @@ public class Database {
         eNotes.forEach((e) -> db.notes.put(e.getID(), e));
 
         em.getTransaction().commit();
-        em.close();
-        emf.close();
+        //em.close();   // Todo: remove, required for lazy loading.
+        //emf.close();
 
         return db;
     }
