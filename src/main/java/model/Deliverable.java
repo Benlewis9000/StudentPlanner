@@ -20,9 +20,9 @@ public class Deliverable {
     private String description;
     private LocalDate deadline;
     @ElementCollection
-    private HashSet<UUID> studyTaskIDs;
+    private Set<UUID> studyTaskIDs;
     @ElementCollection
-    private HashSet<UUID> noteIDs;
+    private Set<UUID> noteIDs;
     private boolean isSummative;
 
     /*
@@ -75,11 +75,11 @@ public class Deliverable {
         return isSummative;
     }
 
-    public HashSet<UUID> getStudyTaskIDs() {
+    public Set<UUID> getStudyTaskIDs() {
         return studyTaskIDs;
     }
 
-    public HashSet<UUID> getNoteIDs() {
+    public Set<UUID> getNoteIDs() {
         return noteIDs;
     }
 

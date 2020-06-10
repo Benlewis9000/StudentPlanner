@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +17,7 @@ public class Module {
     private String moduleOrganiser;
     private String moduleCode;
     @ElementCollection
-    private HashSet<UUID> deliverableIDs;
+    private Set<UUID> deliverableIDs;
 
     /*
      * Empty constructor required for Hibernate
@@ -112,7 +113,7 @@ public class Module {
      * Get all IDs of Deliverables owned by this Module.
      * @return set of UUIDs.
      */
-    public HashSet<UUID> getDeliverableIDs() {
+    public Set<UUID> getDeliverableIDs() {
         return deliverableIDs;
     }
 

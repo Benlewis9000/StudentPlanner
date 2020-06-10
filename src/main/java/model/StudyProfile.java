@@ -10,6 +10,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +21,7 @@ public class StudyProfile {
     private Semester semester;
     private Year startYear;
     @ElementCollection
-    private HashSet<UUID> moduleIDs;
+    private Set<UUID> moduleIDs;
 
     /*
      * Empty constructor required for Hibernate
@@ -112,7 +113,7 @@ public class StudyProfile {
      * Get all IDs of modules owned by this StudyProfile.
      * @return set of UUIDs.
      */
-    public HashSet<UUID> getModuleIDs() {
+    public Set<UUID> getModuleIDs() {
         return moduleIDs;
     }
 

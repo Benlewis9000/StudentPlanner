@@ -4,6 +4,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,11 +16,11 @@ public class StudyTask {
     private int HOURS_REQUIRED;
     private TaskType TYPE;
     @ElementCollection
-    private HashSet<UUID> dependencyIDs;
+    private Set<UUID> dependencyIDs;
     @ElementCollection
-    private HashSet<UUID> activityIDs;
+    private Set<UUID> activityIDs;
     @ElementCollection
-    private HashSet<UUID> noteIDs;
+    private Set<UUID> noteIDs;
 
     /*
      * Empty constructor required for Hibernate
@@ -77,15 +78,15 @@ public class StudyTask {
         return HOURS_REQUIRED;
     }
 
-    public HashSet<UUID> getDependencyIDs() {
+    public Set<UUID> getDependencyIDs() {
         return dependencyIDs;
     }
 
-    public HashSet<UUID> getActivityIDs() {
+    public Set<UUID> getActivityIDs() {
         return activityIDs;
     }
 
-    public HashSet<UUID> getNoteIDs() {
+    public Set<UUID> getNoteIDs() {
         return noteIDs;
     }
 
