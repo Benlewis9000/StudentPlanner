@@ -1,22 +1,34 @@
 package model;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+@Entity
 public class Deliverable {
 
-
-    private final UUID ID;
-    private final DeliverableType TYPE;
+    @Id
+    private UUID ID;
+    private DeliverableType TYPE;
     private String title;
     private String description;
     private LocalDate deadline;
+    @ElementCollection
     private HashSet<UUID> studyTaskIDs;
+    @ElementCollection
     private HashSet<UUID> noteIDs;
-    private final boolean isSummative;
+    private boolean isSummative;
 
+    /*
+     * Empty constructor required for Hibernate
+     */
+    public Deliverable(){}
 
     public Deliverable(DeliverableType deliverableType, String title, String description, LocalDate deadline, boolean isSummative){
 

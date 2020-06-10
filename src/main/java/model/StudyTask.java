@@ -1,18 +1,30 @@
 package model;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.HashSet;
 import java.util.UUID;
 
+@Entity
 public class StudyTask {
 
-    private final UUID ID;
-    private final String title;
-    private final int HOURS_REQUIRED;
-    private final TaskType TYPE;
+    @Id
+    private UUID ID;
+    private String title;
+    private int HOURS_REQUIRED;
+    private TaskType TYPE;
+    @ElementCollection
     private HashSet<UUID> dependencyIDs;
+    @ElementCollection
     private HashSet<UUID> activityIDs;
+    @ElementCollection
     private HashSet<UUID> noteIDs;
 
+    /*
+     * Empty constructor required for Hibernate
+     */
+    public StudyTask(){}
 
     /**
      * Constructor for StudyTask.

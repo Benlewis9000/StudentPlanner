@@ -4,16 +4,21 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.xml.crypto.Data;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class Database {
 
 
     // Singleton pattern reference
-    private static final Database DATABASE = loadDatabaseFromFile();
+    private static final Database DATABASE = initialiseDatabase();
 
     /**
      * Accessor to single Database instance.
@@ -42,6 +47,43 @@ public class Database {
         activities = new HashMap<>();
         notes = new HashMap<>();
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        List<StudyProfile> eStudyProfiles = em.createQuery("SELECT e FROM StudyProfile e", StudyProfile.class).getResultList();
+        List<Module> eModules = em.createQuery("SELECT e FROM Module e", Module.class).getResultList();
+        List<Deliverable> eDeliverables = em.createQuery("SELECT e FROM Deliverable e", Deliverable.class).getResultList();
+        List<StudyTask> eStudyTasks = em.createQuery("SELECT e FROM StudyTask e", StudyTask.class).getResultList();
+        List<Activity> eActivities = em.createQuery("SELECT e FROM Activity e", Activity.class).getResultList();
+        List<Note> eNotes = em.createQuery("SELECT e FROM Note e", Note.class).getResultList();
+
+        eStudyProfiles.forEach((e) -> studyProfiles.put(e.getID(), e));
+        eModules.forEach((e) -> modules.put(e.getID(), e));
+        eDeliverables.forEach((e) -> deliverables.put(e.getID(), e));
+        eStudyTasks.forEach((e) -> studyTasks.put(e.getID(), e));
+        eActivities.forEach((e) -> activities.put(e.getID(), e));
+        eNotes.forEach((e) -> notes.put(e.getID(), e));
+
+        // activities = loadEntities(Activity.class, em);
+
+    }
+
+    private static HashMap<UUID, DatabaseEntity> loadEntities(Class<?> c, EntityManager em){
+
+        List<?> entities = em.createQuery("SELECT e FROM" + c.getName() + " e", c).getResultList();
+
+        HashMap<UUID, DatabaseEntity> r = new HashMap<>();
+
+        for (Object o : entities){
+
+            if (o instanceof DatabaseEntity){
+                r.put(((DatabaseEntity) o).getID(), (DatabaseEntity)o);
+            }
+
+        }
+        return r;
+
     }
 
     public HashMap<UUID, StudyProfile> getStudyProfiles() {
@@ -68,6 +110,56 @@ public class Database {
         return notes;
     }
 
+    private static Database initialiseDatabase(){
+
+        Database db = new Database();
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        List<StudyProfile> eStudyProfiles = em.createQuery("SELECT e FROM StudyProfile e", StudyProfile.class).getResultList();
+        List<Module> eModules = em.createQuery("SELECT e FROM Module e", Module.class).getResultList();
+        List<Deliverable> eDeliverables = em.createQuery("SELECT e FROM Deliverable e", Deliverable.class).getResultList();
+        List<StudyTask> eStudyTasks = em.createQuery("SELECT e FROM StudyTask e", StudyTask.class).getResultList();
+        List<Activity> eActivities = em.createQuery("SELECT e FROM Activity e", Activity.class).getResultList();
+        List<Note> eNotes = em.createQuery("SELECT e FROM Note e", Note.class).getResultList();
+
+        eStudyProfiles.forEach((e) -> db.studyProfiles.put(e.getID(), e));
+        eModules.forEach((e) -> db.modules.put(e.getID(), e));
+        eDeliverables.forEach((e) -> db.deliverables.put(e.getID(), e));
+        eStudyTasks.forEach((e) -> db.studyTasks.put(e.getID(), e));
+        eActivities.forEach((e) -> db.activities.put(e.getID(), e));
+        eNotes.forEach((e) -> db.notes.put(e.getID(), e));
+
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
+
+        return db;
+    }
+
+    public void saveDatabase(){
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        this.studyProfiles.forEach((id, e) -> em.merge(e));
+        this.modules.forEach((id, e) -> em.merge(e));
+        this.deliverables.forEach((id, e) -> em.merge(e));
+        this.studyTasks.forEach((id, e) -> em.merge(e));
+        this.activities.forEach((id, e) -> em.merge(e));
+        this.notes.forEach((id, e) -> em.merge(e));
+
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
+
+    }
+
+    // Todo: alter such that it reads objects in from tables in database
+    @Deprecated
     private static Database loadDatabaseFromFile(){
 
         Gson gson = new Gson();
@@ -98,6 +190,8 @@ public class Database {
     /**
      * Serialize and write out the current database state to "database.json".
      */
+    // Todo: edit so saves objects as rows in relations in database
+    @Deprecated
     public void saveDatabaseToFile(){
 
         // Create Gson object and serialize database to a String.
@@ -125,6 +219,7 @@ public class Database {
      * Export a StudyProfile out as a semester profile (to be used by hub)
      * @param studyProfile containing relevant modules and deliverables.
      */
+    // Todo: should stay?
     public static void exportAsSemesterProfile(StudyProfile studyProfile){
 
         // Database to hold data to export

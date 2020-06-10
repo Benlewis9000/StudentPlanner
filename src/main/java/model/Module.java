@@ -1,17 +1,27 @@
 package model;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.UUID;
 
+@Entity
 public class Module {
 
-    private final UUID ID;
-    private final String moduleTitle;
-    private final String moduleOrganiser;
-    private final String moduleCode;
+    @Id
+    private UUID ID;
+    private String moduleTitle;
+    private String moduleOrganiser;
+    private String moduleCode;
+    @ElementCollection
     private HashSet<UUID> deliverableIDs;
 
+    /*
+     * Empty constructor required for Hibernate
+     */
+    public Module(){};
 
     public Module(String moduleTitle, String moduleOrganiser, String moduleCode){
 

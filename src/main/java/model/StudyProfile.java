@@ -3,20 +3,29 @@ package model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
+@Entity
 public class StudyProfile {
 
-
-    private final UUID ID;
-    private final Semester semester;
-    private final Year startYear;
+    @Id
+    private UUID ID;
+    private Semester semester;
+    private Year startYear;
+    @ElementCollection
     private HashSet<UUID> moduleIDs;
 
+    /*
+     * Empty constructor required for Hibernate
+     */
+    public StudyProfile(){}
 
     /**
      * Constructor for a new StudyProfile, generating a random UUID.

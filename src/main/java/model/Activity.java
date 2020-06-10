@@ -2,14 +2,22 @@ package model;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.UUID;
 
-public class Activity {
+@Entity
+public class Activity implements DatabaseEntity{
 
-    private final UUID ID;
+    @Id
+    private UUID ID;
     private String description;
     private int hoursTaken;
 
+    /*
+     * Empty constructor required for Hibernate
+     */
+    public Activity(){}
 
     /**
      * Constructor for an Activity.
