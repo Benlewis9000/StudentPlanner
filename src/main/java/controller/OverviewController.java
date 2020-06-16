@@ -196,4 +196,22 @@ public class OverviewController implements Initializable {
 
     }
 
+    /**
+     * Go to the Dashboard scene.
+     */
+    public void goToDashboardScene() throws IOException {
+
+        // Load FXML and set as root
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/DashboardView.fxml"));
+        Parent dashboardRoot = loader.load();
+
+        // Create scene
+        Scene dashboardScene = new Scene(dashboardRoot);
+
+        // Change scenes
+        MainApplication.getApplication().getStage().setScene(dashboardScene);
+
+    }
+
 }

@@ -74,6 +74,7 @@ public class DatabaseTest {
 
         UUID id = UUID.randomUUID();
 
+
         TestEntity a = new TestEntity(id);
 
         persistTestEntity(a);

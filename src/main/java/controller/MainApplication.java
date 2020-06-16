@@ -71,7 +71,7 @@ public class MainApplication extends Application {
     @Override
     public void stop(){
 
-        Database.getDatabase().saveDatabaseToFile();
+        Database.getDatabase().saveDatabase();
 
     }
 

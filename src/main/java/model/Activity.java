@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
-public class Activity implements DatabaseEntity{
+public class Activity {
 
     @Id
     private UUID ID;

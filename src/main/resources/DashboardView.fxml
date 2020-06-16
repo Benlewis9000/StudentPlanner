@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+   <children>
+      <VBox layoutX="200.0" layoutY="89.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox maxHeight="83.0" prefHeight="83.0" prefWidth="200.0">
+               <children>
+                  <VBox minWidth="220.0" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <StackPane alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="196.0">
+                           <children>
+                              <Label text="Study Dashboard">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets bottom="5.0" />
+                                 </StackPane.margin>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="TOP_CENTER" prefHeight="100.0" prefWidth="108.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#goToOverviewScene" text="Overview">
+                                 <StackPane.margin>
+                                    <Insets top="5.0" />
+                                 </StackPane.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </StackPane>
+                     </children>
+                  </VBox>
+                  <StackPane alignment="BOTTOM_CENTER" maxHeight="83.0" prefHeight="83.0" prefWidth="380.0">
+                     <children>
+                        <Label alignment="CENTER" maxWidth="380.0" minWidth="380.0" prefWidth="425.0" text="Study Planner" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="48.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+            <StackPane prefHeight="317.0" prefWidth="600.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <StackPane maxHeight="50.0" prefHeight="178.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Completed">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </StackPane>
+                                    <StackPane>
+                                       <children>
+                                          <ScrollPane fx:id="completedScrollPane" minHeight="267.0" StackPane.alignment="TOP_LEFT">
+                                             <content>
+                                                <VBox alignment="CENTER" minHeight="265.0" spacing="5.0">
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <StackPane maxHeight="50.0" prefHeight="178.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Upcoming">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </StackPane>
+                                    <StackPane>
+                                       <children>
+                                          <ScrollPane fx:id="upcomingScrollPane" maxHeight="270.0" minHeight="267.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
+                                             <content>
+                                                <VBox alignment="CENTER" minHeight="265.0" spacing="5.0">
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <StackPane maxHeight="50.0" prefHeight="178.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Missed">
+                                             <font>
+                                                <Font name="System Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </StackPane>
+                                    <StackPane>
+                                       <children>
+                                          <ScrollPane fx:id="missedScrollPane" minHeight="267.0" StackPane.alignment="TOP_LEFT">
+                                             <content>
+                                                <VBox alignment="CENTER" minHeight="265.0" spacing="5.0">
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </HBox>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -7,11 +7,10 @@ import com.google.gson.stream.JsonReader;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.xml.crypto.Data;
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class Database {
@@ -48,23 +47,6 @@ public class Database {
         notes = new HashMap<>();
 
         // activities = loadEntities(Activity.class, em);
-
-    }
-
-    private static HashMap<UUID, DatabaseEntity> loadEntities(Class<?> c, EntityManager em){
-
-        List<?> entities = em.createQuery("SELECT e FROM" + c.getName() + " e", c).getResultList();
-
-        HashMap<UUID, DatabaseEntity> r = new HashMap<>();
-
-        for (Object o : entities){
-
-            if (o instanceof DatabaseEntity){
-                r.put(((DatabaseEntity) o).getID(), (DatabaseEntity)o);
-            }
-
-        }
-        return r;
 
     }
 
@@ -115,8 +97,6 @@ public class Database {
         eNotes.forEach((e) -> db.notes.put(e.getID(), e));
 
         em.getTransaction().commit();
-        //em.close();   // Todo: remove, required for lazy loading.
-        //emf.close();
 
         return db;
     }
