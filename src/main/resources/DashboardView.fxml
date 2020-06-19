@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
    <children>
       <VBox layoutX="200.0" layoutY="89.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -75,7 +74,7 @@
                                     </StackPane>
                                     <StackPane>
                                        <children>
-                                          <ScrollPane fx:id="completedScrollPane" minHeight="267.0" StackPane.alignment="TOP_LEFT">
+                                          <ScrollPane fx:id="completedScrollPane" maxHeight="267.0" minHeight="267.0" StackPane.alignment="TOP_LEFT">
                                              <content>
                                                 <VBox alignment="CENTER" minHeight="265.0" spacing="5.0">
                                                    <padding>
@@ -105,7 +104,7 @@
                                     </StackPane>
                                     <StackPane>
                                        <children>
-                                          <ScrollPane fx:id="upcomingScrollPane" maxHeight="270.0" minHeight="267.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
+                                          <ScrollPane fx:id="upcomingScrollPane" maxHeight="267.0" minHeight="267.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
                                              <content>
                                                 <VBox alignment="CENTER" minHeight="265.0" spacing="5.0">
                                                    <padding>
@@ -135,7 +134,7 @@
                                     </StackPane>
                                     <StackPane>
                                        <children>
-                                          <ScrollPane fx:id="missedScrollPane" minHeight="267.0" StackPane.alignment="TOP_LEFT">
+                                          <ScrollPane fx:id="missedScrollPane" maxHeight="267.0" minHeight="267.0" StackPane.alignment="TOP_LEFT">
                                              <content>
                                                 <VBox alignment="CENTER" minHeight="265.0" spacing="5.0">
                                                    <padding>

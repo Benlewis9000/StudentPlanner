@@ -85,17 +85,17 @@
                         </StackPane>
                         <StackPane prefHeight="99.0" prefWidth="374.0">
                            <children>
-                              <GridPane maxWidth="-Infinity" prefHeight="69.0" prefWidth="298.0">
+                              <GridPane>
                                  <columnConstraints>
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="102.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="192.0" />
                                  </columnConstraints>
                                  <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
                                     <Label text="Title: " />
@@ -105,7 +105,7 @@
                                     <Text fx:id="deliverableDescriptionText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="185.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Text fx:id="deliverableDeadlineText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Label text="Type: " GridPane.rowIndex="3" />
-                                    <Label text="Summative:" GridPane.rowIndex="4" />
+                                    <Label text="Summative: " GridPane.rowIndex="4" />
                                     <Text fx:id="deliverableTypeText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <Text fx:id="deliverableSummativeText" fill="#757575" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                  </children>
@@ -130,49 +130,30 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </StackPane>
-                        <StackPane prefHeight="26.0" prefWidth="374.0">
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="studyTaskTitleTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="Title">
-                                 <StackPane.margin>
-                                    <Insets />
-                                 </StackPane.margin>
-                              </TextField>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </StackPane>
-                        <StackPane prefHeight="26.0" prefWidth="374.0">
-                           <children>
-                              <TextField fx:id="studyTaskHoursRequiredTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="Hours required to complete">
-                                 <StackPane.margin>
-                                    <Insets />
-                                 </StackPane.margin>
-                              </TextField>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </StackPane>
-                        <StackPane layoutX="10.0" layoutY="185.0" prefHeight="0.0" prefWidth="374.0">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
                                  <children>
-                                    <StackPane alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="137.0">
-                                       <children>
-                                          <Label prefHeight="17.0" prefWidth="99.0" text="Study Task type: " />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
-                                       <children>
-                                          <ChoiceBox fx:id="studyTaskTypeChoiceBox" prefHeight="25.0" prefWidth="215.0" />
-                                       </children>
-                                    </StackPane>
+                                    <TextField fx:id="studyTaskTitleTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="180.0" promptText="Title" GridPane.columnIndex="1" />
+                                    <TextField fx:id="studyTaskHoursRequiredTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="180.0" promptText="Hours required to complete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="studyTaskTypeChoiceBox" prefHeight="25.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Study Task type: " GridPane.rowIndex="2" />
+                                    <Label text="Hours required: " GridPane.rowIndex="1" />
+                                    <Label text="Title: " />
                                  </children>
-                              </HBox>
+                                 <StackPane.margin>
+                                    <Insets top="10.0" />
+                                 </StackPane.margin>
+                              </GridPane>
                            </children>
                         </StackPane>
                         <StackPane layoutX="10.0" layoutY="10.0" prefHeight="0.0" prefWidth="374.0">

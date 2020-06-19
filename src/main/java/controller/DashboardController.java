@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -23,6 +24,7 @@ import javax.xml.crypto.Data;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -48,9 +50,9 @@ public class DashboardController implements Initializable {
 
     public void initData(){
 
-        List<Deliverable> cDeliv = new ArrayList<>();
-        List<Deliverable> uDeliv = new ArrayList<>();
-        List<Deliverable> fDeliv = new ArrayList<>();
+        Map<Deliverable, Double> cDeliv = new HashMap<>();
+        Map<Deliverable, Double> uDeliv = new HashMap<>();
+        Map<Deliverable, Double> fDeliv = new HashMap<>();
 
         for (Deliverable d : Database.getDatabase().getDeliverables().values()){
 
@@ -70,58 +72,42 @@ public class DashboardController implements Initializable {
 
             }
 
-            if (hoursDone < hoursRequired && d.getDeadline().isBefore(LocalDate.now())) fDeliv.add(d);
-            else if (hoursDone > hoursRequired) cDeliv.add(d);
-            else uDeliv.add(d);
+            // Get progress percentage - default to 1 (complete) if none needed.
+            double progress;
+            if (hoursRequired == 0) progress = 1;
+            else progress = (double)hoursDone/(double)hoursRequired;
+
+            if (hoursDone < hoursRequired && d.getDeadline().isBefore(LocalDate.now())) fDeliv.put(d, Double.valueOf(progress));
+            else if (hoursDone < hoursRequired) uDeliv.put(d, Double.valueOf(progress));
+            else cDeliv.put(d, Double.valueOf(progress));
 
         }
 
-        populatePane((VBox) completedScrollPane.getContent(), cDeliv, Color.GREEN);
-        populatePane((VBox) upcomingScrollPane.getContent(), uDeliv, Color.BLACK);
-        populatePane((VBox) missedScrollPane.getContent(), fDeliv, Color.RED);
+        populateScrollPane((VBox) completedScrollPane.getContent(), cDeliv, Color.GREEN);
+        populateScrollPane((VBox) upcomingScrollPane.getContent(), uDeliv, Color.BLACK);
+        populateScrollPane((VBox) missedScrollPane.getContent(), fDeliv, Color.RED);
 
         System.out.println("Finished initData");
 
-        /*
-        VBox vbox = new VBox();
-        vbox.setSpacing(10);
-        vbox.setPadding(new Insets(10));
-        vbox.setAlignment(Pos.CENTER);
-
-        for (int i = 1; i <= 100; i++){
-            System.out.println(i);
-            Text t = new Text("Text " + i);
-            t.setTextAlignment(TextAlignment.CENTER);
-            StackPane sp = new StackPane();
-            sp.setAlignment(Pos.CENTER);
-            sp.setPrefHeight(10);
-            sp.getChildren().add(t);
-            //rightBox.getChildren().add(sp);
-            scrollPaneAnchor.getChildren().add(sp);
-            vbox.getChildren().add(sp);
-
-            scrollPane.setContent(vbox);
-            scrollPane.setPannable(true);
-
-
-        }
-         */
-
     }
 
-    private void populatePane(VBox vbox, List<Deliverable> deliverables, Color color){
+    private void populateScrollPane(VBox vbox, Map<Deliverable, Double> deliverables, Color color){
 
-        for (Deliverable d : deliverables){
+        vbox.setAlignment(Pos.TOP_LEFT);
+
+        for (Deliverable d : deliverables.keySet()){
 
             Text title = new Text(d.getTitle());
             Text deadline  = new Text(d.getDeadline().toString());
+            ProgressBar pB = new ProgressBar(deliverables.get(d));
             VBox innerVbox = new VBox();
             innerVbox.getChildren().add(title);
             innerVbox.getChildren().add(deadline);
+            innerVbox.getChildren().add(pB);
             title.setFill(color);
             deadline.setFill(Color.GRAY);
             StackPane sp = new StackPane();
-            sp.setPadding(new Insets(5, 0, 5, 0));
+            sp.setPadding(new Insets(0, 0, 5, 0));
             sp.getChildren().add(innerVbox);
             vbox.getChildren().add(sp);
 
