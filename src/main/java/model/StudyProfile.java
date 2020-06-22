@@ -19,6 +19,7 @@ public class StudyProfile {
     @Id
     private UUID ID;
     private Semester semester;
+    // Start of academic year
     private Year startYear;
     @ElementCollection
     private Set<UUID> moduleIDs;
@@ -159,8 +160,7 @@ public class StudyProfile {
         modules.put(softEng.getID(), softEng);
         modules.put(networks.getID(), networks);
 
-        return new StudyProfile(Semester.SPRING, Year.of(2020)); // todo: update to new format (sets & database)
-        // Todo: studyProfile.addModule(module) - need to implement add etc. first
+        return new StudyProfile(Semester.SPRING, Year.of(2020));
 
     }
 

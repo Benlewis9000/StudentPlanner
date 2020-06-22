@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.JsonSyntaxException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import model.StudyProfile;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ResourceBundle;
 
 public class OverviewController implements Initializable {
@@ -129,21 +131,39 @@ public class OverviewController implements Initializable {
         System.out.println(path);
 
         // Attempt to import and show error message if failure.
-        if(!Database.importSemesterProfile(path)) {
+        try {
+            Database.importSemesterProfile(path);
+        }
+        catch (FileAlreadyExistsException e){
 
             // Set and display error message.
-            feedbackText.setText("ERROR: Failed to import semester profile.");
+            feedbackText.setText("ERROR: A profile for this semester has already been imported.\nPlease delete it and try again.");
             feedbackText.setVisible(true);
+            return;
 
         }
-        else {
+        catch (JsonSyntaxException e){
 
-            // Set and display success message, clear fields
+            // Set and display error message.
+            feedbackText.setText("ERROR: Failed to import semester profile (JSON syntax exception).");
             feedbackText.setVisible(true);
-            feedbackText.setText("Successfully imported semester profile! ");
-            semesterProfilePathTextField.setText("");
+            return;
 
         }
+        catch (IOException e){
+
+            // Set and display error message.
+            feedbackText.setText("ERROR: Failed to import semester profile (Could not read file).");
+            feedbackText.setVisible(true);
+            return;
+
+        }
+
+        // Set and display success message, clear fields
+        feedbackText.setVisible(true);
+        feedbackText.setText("Successfully imported semester profile! ");
+        semesterProfilePathTextField.setText("");
+
 
         // Update the data displayed.
         updateStudyProfileListView();

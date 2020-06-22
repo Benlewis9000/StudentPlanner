@@ -48,12 +48,16 @@ public class DashboardController implements Initializable {
 
     }
 
+    /**
+     * Initialise the dynamic data to be displayed in the scene.
+     */
     public void initData(){
 
         Map<Deliverable, Double> cDeliv = new HashMap<>();
         Map<Deliverable, Double> uDeliv = new HashMap<>();
         Map<Deliverable, Double> fDeliv = new HashMap<>();
 
+        // Populate maps
         for (Deliverable d : Database.getDatabase().getDeliverables().values()){
 
             int hoursRequired = 0;
@@ -77,12 +81,14 @@ public class DashboardController implements Initializable {
             if (hoursRequired == 0) progress = 1;
             else progress = (double)hoursDone/(double)hoursRequired;
 
+            // Sort deliverables into correct map
             if (hoursDone < hoursRequired && d.getDeadline().isBefore(LocalDate.now())) fDeliv.put(d, Double.valueOf(progress));
             else if (hoursDone < hoursRequired) uDeliv.put(d, Double.valueOf(progress));
             else cDeliv.put(d, Double.valueOf(progress));
 
         }
 
+        // Populate scroll panes
         populateScrollPane((VBox) completedScrollPane.getContent(), cDeliv, Color.GREEN);
         populateScrollPane((VBox) upcomingScrollPane.getContent(), uDeliv, Color.BLACK);
         populateScrollPane((VBox) missedScrollPane.getContent(), fDeliv, Color.RED);
@@ -95,19 +101,24 @@ public class DashboardController implements Initializable {
 
         vbox.setAlignment(Pos.TOP_LEFT);
 
+        // Iterate deliverables passed
         for (Deliverable d : deliverables.keySet()){
 
+            // Get data
             Text title = new Text(d.getTitle());
             Text deadline  = new Text(d.getDeadline().toString());
             ProgressBar pB = new ProgressBar(deliverables.get(d));
+            // Parent node deliverable data
             VBox innerVbox = new VBox();
             innerVbox.getChildren().add(title);
             innerVbox.getChildren().add(deadline);
             innerVbox.getChildren().add(pB);
+            // Assign colors and formatting
             title.setFill(color);
             deadline.setFill(Color.GRAY);
             StackPane sp = new StackPane();
             sp.setPadding(new Insets(0, 0, 5, 0));
+            // Assign node children
             sp.getChildren().add(innerVbox);
             vbox.getChildren().add(sp);
 

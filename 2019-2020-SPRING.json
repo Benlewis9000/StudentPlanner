@@ -1,0 +1,97 @@
+{
+  "studyProfiles": {
+    "45509f0f-131c-46fc-8406-465566570d7b": {
+      "ID": "45509f0f-131c-46fc-8406-465566570d7b",
+      "semester": "SPRING",
+      "startYear": {
+        "year": 2019
+      },
+      "moduleIDs": [
+        "45c6a565-15e3-414b-a44a-9124d8bdaea1",
+        "e5b35412-84dd-4375-81c6-fda05176c565"
+      ]
+    }
+  },
+  "modules": {
+    "45c6a565-15e3-414b-a44a-9124d8bdaea1": {
+      "ID": "45c6a565-15e3-414b-a44a-9124d8bdaea1",
+      "moduleTitle": "PROGRAMMING 2",
+      "moduleOrganiser": "Gavin Cawley",
+      "moduleCode": "CMP-5015Y",
+      "deliverableIDs": [
+        "00fc16c6-f15c-495b-9f9a-426896665662",
+        "1363b83e-cbdd-4aaf-869a-4a48c2357654",
+        "f403ef1e-7054-47b5-adcb-86e1b2513388"
+      ]
+    },
+    "e5b35412-84dd-4375-81c6-fda05176c565": {
+      "ID": "e5b35412-84dd-4375-81c6-fda05176c565",
+      "moduleTitle": "NETWORKS",
+      "moduleOrganiser": "Ben Milner",
+      "moduleCode": "CMP-5037B",
+      "deliverableIDs": [
+        "9499ce96-0d1f-4b53-aaf1-318356ce7dcd"
+      ]
+    }
+  },
+  "deliverables": {
+    "9499ce96-0d1f-4b53-aaf1-318356ce7dcd": {
+      "ID": "9499ce96-0d1f-4b53-aaf1-318356ce7dcd",
+      "TYPE": "EXAM",
+      "title": "Networks Final Exam",
+      "description": "2 hours, room LT1 @ 3pm",
+      "deadline": {
+        "year": 2020,
+        "month": 6,
+        "day": 30
+      },
+      "studyTaskIDs": [],
+      "noteIDs": [],
+      "isSummative": true
+    },
+    "00fc16c6-f15c-495b-9f9a-426896665662": {
+      "ID": "00fc16c6-f15c-495b-9f9a-426896665662",
+      "TYPE": "COURSEWORK",
+      "title": "Prog. 2 CW2",
+      "description": "Offline Movie Database in C++",
+      "deadline": {
+        "year": 2020,
+        "month": 5,
+        "day": 18
+      },
+      "studyTaskIDs": [],
+      "noteIDs": [],
+      "isSummative": true
+    },
+    "1363b83e-cbdd-4aaf-869a-4a48c2357654": {
+      "ID": "1363b83e-cbdd-4aaf-869a-4a48c2357654",
+      "TYPE": "EXAM",
+      "title": "Prog. 2 Formative Exam",
+      "description": "Access via Blackboard",
+      "deadline": {
+        "year": 2020,
+        "month": 3,
+        "day": 13
+      },
+      "studyTaskIDs": [],
+      "noteIDs": [],
+      "isSummative": false
+    },
+    "f403ef1e-7054-47b5-adcb-86e1b2513388": {
+      "ID": "f403ef1e-7054-47b5-adcb-86e1b2513388",
+      "TYPE": "COURSEWORK",
+      "title": "Prog. 2 CW1",
+      "description": "Card Game in Java",
+      "deadline": {
+        "year": 2020,
+        "month": 2,
+        "day": 20
+      },
+      "studyTaskIDs": [],
+      "noteIDs": [],
+      "isSummative": true
+    }
+  },
+  "studyTasks": {},
+  "activities": {}
+}

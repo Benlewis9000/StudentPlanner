@@ -39,7 +39,6 @@ public class Deliverable {
         this.description = description;
         this.deadline = deadline;
         this.isSummative = isSummative;
-
         this.studyTaskIDs = new HashSet<UUID>();
         this.noteIDs = new HashSet<UUID>();
 
@@ -140,56 +139,6 @@ public class Deliverable {
 
         studyTaskIDs.remove(studyTask.getID());
         Database.getDatabase().deleteStudyTask(studyTask.getID());
-
-    }
-
-
-    /**
-     * Query whether the Deliverable has the Note corresponding to the given UUID.
-     * @param uuid UUID of the Note in question.
-     * @return true if the UUID corresponds to a Note owned by this Deliverable.
-     */
-    public boolean hasNote(UUID uuid){
-
-        return noteIDs.contains(uuid);
-
-    }
-
-    /**
-     * Get the Note instance of an note held by the Deliverable.
-     * @param uuid of the Note held.
-     * @return the instance of the Note.
-     * @throws IllegalArgumentException if the Note was not held, or could not be found in the database.
-     */
-    public Note getNoteFromUUID(UUID uuid) throws IllegalArgumentException{
-
-        if (hasNote(uuid)){
-
-            return Database.getDatabase().getNoteFromUUID(uuid);
-
-        }
-        else throw new IllegalArgumentException("Note " + uuid + " is not a member of Deliverable + " + this.getID() + ".");
-
-    }
-
-    /**
-     * Add a Note to the Deliverable.
-     * @param note to add.
-     */
-    public void addNote(Note note){
-
-        noteIDs.add(note.getID());
-
-    }
-
-    /**
-     * Remove a Note from the Deliverable (and delete from database).
-     * @param note to remove.
-     */
-    public void removeNote(Note note){
-
-        noteIDs.remove(note.getID());
-        Database.getDatabase().deleteNote(note.getID());
 
     }
 

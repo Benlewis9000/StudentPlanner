@@ -2,12 +2,16 @@ package model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +38,6 @@ public class Database {
     private HashMap<UUID, Deliverable> deliverables;
     private HashMap<UUID, StudyTask> studyTasks;
     private HashMap<UUID, Activity> activities;
-    private HashMap<UUID, Note> notes;
 
 
     private Database(){
@@ -44,9 +47,6 @@ public class Database {
         deliverables = new HashMap<>();
         studyTasks = new HashMap<>();
         activities = new HashMap<>();
-        notes = new HashMap<>();
-
-        // activities = loadEntities(Activity.class, em);
 
     }
 
@@ -70,31 +70,29 @@ public class Database {
         return activities;
     }
 
-    public HashMap<UUID, Note> getNotes() {
-        return notes;
-    }
-
     private static Database initialiseDatabase(){
 
+        // Virtual database
         Database db = new Database();
 
+        // Establish database connection
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
+        // Database queries
         List<StudyProfile> eStudyProfiles = em.createQuery("SELECT e FROM StudyProfile e", StudyProfile.class).getResultList();
         List<Module> eModules = em.createQuery("SELECT e FROM Module e", Module.class).getResultList();
         List<Deliverable> eDeliverables = em.createQuery("SELECT e FROM Deliverable e", Deliverable.class).getResultList();
         List<StudyTask> eStudyTasks = em.createQuery("SELECT e FROM StudyTask e", StudyTask.class).getResultList();
         List<Activity> eActivities = em.createQuery("SELECT e FROM Activity e", Activity.class).getResultList();
-        List<Note> eNotes = em.createQuery("SELECT e FROM Note e", Note.class).getResultList();
 
+        // Populate virtual database
         eStudyProfiles.forEach((e) -> db.studyProfiles.put(e.getID(), e));
         eModules.forEach((e) -> db.modules.put(e.getID(), e));
         eDeliverables.forEach((e) -> db.deliverables.put(e.getID(), e));
         eStudyTasks.forEach((e) -> db.studyTasks.put(e.getID(), e));
         eActivities.forEach((e) -> db.activities.put(e.getID(), e));
-        eNotes.forEach((e) -> db.notes.put(e.getID(), e));
 
         em.getTransaction().commit();
 
@@ -112,7 +110,6 @@ public class Database {
         this.deliverables.forEach((id, e) -> em.merge(e));
         this.studyTasks.forEach((id, e) -> em.merge(e));
         this.activities.forEach((id, e) -> em.merge(e));
-        this.notes.forEach((id, e) -> em.merge(e));
 
         em.getTransaction().commit();
         em.close();
@@ -120,7 +117,10 @@ public class Database {
 
     }
 
-    // Todo: alter such that it reads objects in from tables in database
+    /**
+     * DEPREATED. Not to be used.
+     * @return Database instance representing what was read from file.
+     */
     @Deprecated
     private static Database loadDatabaseFromFile(){
 
@@ -151,8 +151,8 @@ public class Database {
 
     /**
      * Serialize and write out the current database state to "database.json".
+     * DEPRECATED. Not to be used.
      */
-    // Todo: edit so saves objects as rows in relations in database
     @Deprecated
     public void saveDatabaseToFile(){
 
@@ -178,10 +178,9 @@ public class Database {
     }
 
     /**
-     * Export a StudyProfile out as a semester profile (to be used by hub)
+     * Export a StudyProfile out as a semester profile (to be used by hub).
      * @param studyProfile containing relevant modules and deliverables.
      */
-    // Todo: should stay?
     public static void exportAsSemesterProfile(StudyProfile studyProfile){
 
         // Database to hold data to export
@@ -235,36 +234,32 @@ public class Database {
      * @param path to semester profile.
      * @return whether import was successful.
      */
-    public static boolean importSemesterProfile(String path){
+    public static void importSemesterProfile(String path) throws FileAlreadyExistsException, IOException, JsonSyntaxException {
 
         // Database to import into
         Database importedDatabase;
 
         Gson gson = new Gson();
 
-        try {
+        // Attempt to read in a data file
+        JsonReader reader = new JsonReader(new FileReader(new File(path)));
+        System.out.println("Successfully read in " + path + ".");
 
-            // Attempt to read in a data file
-            JsonReader reader = new JsonReader(new FileReader(new File(path)));
-            System.out.println("Successfully read in " + path + ".");
+        // Deserialize json to get Database instance
+        importedDatabase = gson.fromJson(reader, Database.class);
 
-            // Deserialize json to get Database instance
-            importedDatabase = gson.fromJson(reader, Database.class);
-
-        }
-        catch (Exception e){
-
-            System.out.println("Error: failed to import Semester Profile from " + path + ".");
-            return false;
-
+        // If any imported semester profiles have the same name as
+        for (UUID iSp : importedDatabase.studyProfiles.keySet()){
+            for (UUID eSp : getDatabase().studyProfiles.keySet()){
+                System.out.println("comparing " + iSp.toString() + " to " + eSp.toString());
+                if (iSp.toString().equals(eSp.toString())) throw new FileAlreadyExistsException(path);
+            }
         }
 
         // Merge data into main database
         getDatabase().studyProfiles.putAll(importedDatabase.studyProfiles);
         getDatabase().modules.putAll(importedDatabase.modules);
         getDatabase().deliverables.putAll(importedDatabase.deliverables);
-
-        return true;
 
     }
 
@@ -293,7 +288,30 @@ public class Database {
 
     public void deleteStudyProfile(UUID uuid){
 
+        // Delete children
+        StudyProfile sp = getStudyProfileFromUUID(uuid);
+        for (UUID mUuid : sp.getModuleIDs()){
+
+            deleteModule(mUuid);
+
+        }
+
+        // Remove from virtual database
         studyProfiles.remove(uuid);
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        // Remove from external database
+        sp = em.find(StudyProfile.class, uuid);
+        if (sp != null) {
+
+            System.out.println("not null");
+            em.remove(sp);
+        }
+
+        em.getTransaction().commit();
 
     }
 
@@ -323,7 +341,26 @@ public class Database {
 
     public void deleteModule(UUID uuid){
 
+        Module m = getModuleFromUUID(uuid);
+        for (UUID dUuid : m.getDeliverableIDs()){
+
+            deleteDeliverable(dUuid);
+
+        }
         modules.remove(uuid);
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        m = em.find(Module.class, uuid);
+        if (m != null) {
+
+            System.out.println("not null");
+            em.remove(m);
+        }
+
+        em.getTransaction().commit();
 
     }
 
@@ -353,7 +390,26 @@ public class Database {
 
     public void deleteDeliverable(UUID uuid){
 
+        Deliverable d = getDeliverableFromUUID(uuid);
+        for (UUID stUuid : d.getStudyTaskIDs()){
+
+            deleteStudyTask(stUuid);
+
+        }
         deliverables.remove(uuid);
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        d = em.find(Deliverable.class, uuid);
+        if (d != null) {
+
+            System.out.println("not null");
+            em.remove(d);
+        }
+
+        em.getTransaction().commit();
 
     }
 
@@ -385,6 +441,21 @@ public class Database {
 
         studyTasks.remove(uuid);
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        StudyTask st = em.find(StudyTask.class, uuid);
+        if (st != null) {
+
+            // Does not delete Activities as may be shared with other StudyTasks
+
+            System.out.println("not null");
+            em.remove(st);
+        }
+
+        em.getTransaction().commit();
+
     }
 
 
@@ -415,35 +486,37 @@ public class Database {
 
         activities.remove(uuid);
 
-    }
 
-
-    public void addNote(Note note){
-
-        notes.put(note.getID(), note);
 
     }
 
-    public boolean containsNote(UUID uuid){
+    /**
+     * An example of how a semester profile can be generated.
+     */
+    public static void main(String[] args){
 
-        return notes.containsKey(uuid);
+        StudyProfile spring = new StudyProfile(Semester.SPRING, Year.of(2019));
 
-    }
+        Module prog2 = new Module("PROGRAMMING 2", "Gavin Cawley", "CMP-5015Y");
+        Deliverable prog2cw1 = new Deliverable(DeliverableType.COURSEWORK, "Prog. 2 CW1",
+                "Card Game in Java", LocalDate.of(2020, 2, 20), true);
+        Deliverable prog2cw2 = new Deliverable(DeliverableType.COURSEWORK, "Prog. 2 CW2",
+                            "Offline Movie Database in C++", LocalDate.of(2020, 5, 18), true);
+        Deliverable prog2e1 = new Deliverable(DeliverableType.EXAM, "Prog. 2 Formative Exam", "Access via Blackboard",
+                                LocalDate.of(2020, 3, 13), false);
+        prog2.addDeliverable(prog2cw1);
+        prog2.addDeliverable(prog2cw2);
+        prog2.addDeliverable(prog2e1);
 
-    public Note getNoteFromUUID(UUID uuid) throws IllegalArgumentException{
+        Module networks = new Module("NETWORKS", "Ben Milner", "CMP-5037B");
+        Deliverable nete1 = new Deliverable(DeliverableType.EXAM, "Networks Final Exam", "2 hours, room LT1 @ 3pm",
+                                LocalDate.of(2020, 6, 30), true);
+        networks.addDeliverable(nete1);
 
-        if (containsNote(uuid)){
+        spring.addModule(prog2);
+        spring.addModule(networks);
 
-            return notes.get(uuid);
-
-        }
-        else throw new IllegalArgumentException("Note " + uuid.toString() + " could not be found.");
-
-    }
-
-    public void deleteNote(UUID uuid){
-
-        notes.remove(uuid);
+        exportAsSemesterProfile(spring);
 
     }
 

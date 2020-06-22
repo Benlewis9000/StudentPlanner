@@ -1,0 +1,44 @@
+{
+  "studyProfiles": {
+    "a6cbf2a1-f41e-4d3c-b8c8-131dd9a89e27": {
+      "ID": "a6cbf2a1-f41e-4d3c-b8c8-131dd9a89e27",
+      "semester": "AUTUMN",
+      "startYear": {
+        "year": 2019
+      },
+      "moduleIDs": [
+        "bd008317-1aa5-432f-a824-f6c093f7744d"
+      ]
+    }
+  },
+  "modules": {
+    "bd008317-1aa5-432f-a824-f6c093f7744d": {
+      "ID": "bd008317-1aa5-432f-a824-f6c093f7744d",
+      "moduleTitle": "ELECTRONICS",
+      "moduleOrganiser": "Ben Milner",
+      "moduleCode": "CMP-5027A",
+      "deliverableIDs": [
+        "b887f9ce-ab6f-4078-8c1d-8d1aa41df7cd"
+      ]
+    }
+  },
+  "deliverables": {
+    "b887f9ce-ab6f-4078-8c1d-8d1aa41df7cd": {
+      "ID": "b887f9ce-ab6f-4078-8c1d-8d1aa41df7cd",
+      "TYPE": "EXAM",
+      "title": "Electronics Final Exam",
+      "description": "2 hours, room C. HALL. @ 9am",
+      "deadline": {
+        "year": 2020,
+        "month": 6,
+        "day": 12
+      },
+      "studyTaskIDs": [],
+      "noteIDs": [],
+      "isSummative": true
+    }
+  },
+  "studyTasks": {},
+  "activities": {},
+  "notes": {}
+}
